@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1332</width>
-    <height>858</height>
+    <width>1263</width>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#0000ff;&quot;&gt;Hex Bit Analysis &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#0000ff;&quot;&gt;Hex Bit Analysis &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
@@ -112,7 +112,7 @@
     <rect>
      <x>10</x>
      <y>50</y>
-     <width>771</width>
+     <width>1241</width>
      <height>231</height>
     </rect>
    </property>
@@ -144,12 +144,21 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;&amp;amp;Input Data &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit</cstring>
+        <cstring>lineEdit_Input</cstring>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="lineEdit_Input">
+       <property name="font">
+        <font>
+         <pointsize>18</pointsize>
+        </font>
+       </property>
+       <property name="maxLength">
+        <number>8</number>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer_2">
@@ -173,12 +182,18 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;&amp;amp;Output Data &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_2</cstring>
+        <cstring>lineEdit_Output</cstring>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QLineEdit" name="lineEdit_Output">
+       <property name="font">
+        <font>
+         <pointsize>18</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -227,8 +242,8 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>751</width>
-      <height>101</height>
+      <width>1212</width>
+      <height>111</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_112">
@@ -320,7 +335,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -485,7 +500,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -650,7 +665,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -815,7 +830,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -980,7 +995,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -1145,7 +1160,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -1310,7 +1325,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -1475,7 +1490,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -1640,7 +1655,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -1805,7 +1820,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -1970,7 +1985,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -2135,7 +2150,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -2300,7 +2315,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -2465,7 +2480,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -2630,7 +2645,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -2795,7 +2810,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -2960,7 +2975,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -3125,7 +3140,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -3290,7 +3305,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -3455,7 +3470,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -3620,7 +3635,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -3785,7 +3800,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -3950,7 +3965,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -4115,7 +4130,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -4280,7 +4295,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -4445,7 +4460,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -4610,7 +4625,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -4775,7 +4790,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -4940,7 +4955,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -5105,7 +5120,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -5270,7 +5285,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -5435,7 +5450,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QGroupBox{
-	border:4px inset lightGray;
+	border:4px outset lightGray;
 	border-radius: 3px;
 	background: white
 }</string>
@@ -5569,6 +5584,11 @@
           <height>21</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
        </widget>
        <widget class="QLabel" name="label_8">
         <property name="geometry">
@@ -5591,6 +5611,11 @@
           <width>91</width>
           <height>21</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
         </property>
        </widget>
        <widget class="QLabel" name="label_9">
@@ -5651,13 +5676,6 @@
          </item>
         </layout>
        </widget>
-       <zorder>label_7</zorder>
-       <zorder>lineEdit_5</zorder>
-       <zorder>label_8</zorder>
-       <zorder>lineEdit_6</zorder>
-       <zorder>label_9</zorder>
-       <zorder>groupBox</zorder>
-       <zorder>verticalLayoutWidget</zorder>
       </widget>
      </item>
      <item>
@@ -5705,6 +5723,11 @@
           <height>21</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
        </widget>
        <widget class="QLabel" name="label_5">
         <property name="geometry">
@@ -5727,6 +5750,11 @@
           <width>91</width>
           <height>21</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
         </property>
        </widget>
        <widget class="QLabel" name="label_6">
@@ -5805,12 +5833,6 @@
     </property>
    </widget>
   </widget>
-  <zorder>horizontalLayoutWidget</zorder>
-  <zorder>groupBox_0</zorder>
-  <zorder>groupBox_2</zorder>
-  <zorder>horizontalLayoutWidget_3</zorder>
-  <zorder>horizontalLayoutWidget_6</zorder>
-  <zorder>horizontalLayoutWidget_3</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
