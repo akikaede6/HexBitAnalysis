@@ -11,6 +11,8 @@ HexBitAnalysis::HexBitAnalysis(QWidget *parent) :
 
     ui->setupUi(this);
 
+    ui->lineEdit_Output->setText("00000000");
+
     LabelOrig0.clear();
     LabelOrig0.append(ui->label_orig0_0);
     LabelOrig0.append(ui->label_orig0_1);
@@ -45,39 +47,44 @@ HexBitAnalysis::HexBitAnalysis(QWidget *parent) :
     LabelOrig0.append(ui->label_orig0_30);
     LabelOrig0.append(ui->label_orig0_31);
 
-    GrpboxOrig0.clear();
-    GrpboxOrig0.append(ui->groupBox_0_0);
-    GrpboxOrig0.append(ui->groupBox_0_1);
-    GrpboxOrig0.append(ui->groupBox_0_2);
-    GrpboxOrig0.append(ui->groupBox_0_3);
-    GrpboxOrig0.append(ui->groupBox_0_4);
-    GrpboxOrig0.append(ui->groupBox_0_5);
-    GrpboxOrig0.append(ui->groupBox_0_6);
-    GrpboxOrig0.append(ui->groupBox_0_7);
-    GrpboxOrig0.append(ui->groupBox_0_8);
-    GrpboxOrig0.append(ui->groupBox_0_9);
-    GrpboxOrig0.append(ui->groupBox_0_10);
-    GrpboxOrig0.append(ui->groupBox_0_11);
-    GrpboxOrig0.append(ui->groupBox_0_12);
-    GrpboxOrig0.append(ui->groupBox_0_13);
-    GrpboxOrig0.append(ui->groupBox_0_14);
-    GrpboxOrig0.append(ui->groupBox_0_15);
-    GrpboxOrig0.append(ui->groupBox_0_16);
-    GrpboxOrig0.append(ui->groupBox_0_17);
-    GrpboxOrig0.append(ui->groupBox_0_18);
-    GrpboxOrig0.append(ui->groupBox_0_19);
-    GrpboxOrig0.append(ui->groupBox_0_20);
-    GrpboxOrig0.append(ui->groupBox_0_21);
-    GrpboxOrig0.append(ui->groupBox_0_22);
-    GrpboxOrig0.append(ui->groupBox_0_23);
-    GrpboxOrig0.append(ui->groupBox_0_24);
-    GrpboxOrig0.append(ui->groupBox_0_25);
-    GrpboxOrig0.append(ui->groupBox_0_26);
-    GrpboxOrig0.append(ui->groupBox_0_27);
-    GrpboxOrig0.append(ui->groupBox_0_28);
-    GrpboxOrig0.append(ui->groupBox_0_29);
-    GrpboxOrig0.append(ui->groupBox_0_30);
-    GrpboxOrig0.append(ui->groupBox_0_31);
+    PushButtonOut0.clear();
+    PushButtonOut0.append(ui->pushbutton_out0_0);
+    PushButtonOut0.append(ui->pushbutton_out0_1);
+    PushButtonOut0.append(ui->pushbutton_out0_2);
+    PushButtonOut0.append(ui->pushbutton_out0_3);
+    PushButtonOut0.append(ui->pushbutton_out0_4);
+    PushButtonOut0.append(ui->pushbutton_out0_5);
+    PushButtonOut0.append(ui->pushbutton_out0_6);
+    PushButtonOut0.append(ui->pushbutton_out0_7);
+    PushButtonOut0.append(ui->pushbutton_out0_8);
+    PushButtonOut0.append(ui->pushbutton_out0_9);
+    PushButtonOut0.append(ui->pushbutton_out0_10);
+    PushButtonOut0.append(ui->pushbutton_out0_11);
+    PushButtonOut0.append(ui->pushbutton_out0_12);
+    PushButtonOut0.append(ui->pushbutton_out0_13);
+    PushButtonOut0.append(ui->pushbutton_out0_14);
+    PushButtonOut0.append(ui->pushbutton_out0_15);
+    PushButtonOut0.append(ui->pushbutton_out0_16);
+    PushButtonOut0.append(ui->pushbutton_out0_17);
+    PushButtonOut0.append(ui->pushbutton_out0_18);
+    PushButtonOut0.append(ui->pushbutton_out0_19);
+    PushButtonOut0.append(ui->pushbutton_out0_20);
+    PushButtonOut0.append(ui->pushbutton_out0_21);
+    PushButtonOut0.append(ui->pushbutton_out0_22);
+    PushButtonOut0.append(ui->pushbutton_out0_23);
+    PushButtonOut0.append(ui->pushbutton_out0_24);
+    PushButtonOut0.append(ui->pushbutton_out0_25);
+    PushButtonOut0.append(ui->pushbutton_out0_26);
+    PushButtonOut0.append(ui->pushbutton_out0_27);
+    PushButtonOut0.append(ui->pushbutton_out0_28);
+    PushButtonOut0.append(ui->pushbutton_out0_29);
+    PushButtonOut0.append(ui->pushbutton_out0_30);
+    PushButtonOut0.append(ui->pushbutton_out0_31);
+
+    for (i = 0; i < 32; i++) {
+        connect(PushButtonOut0[i], SIGNAL(clicked()),
+                this, SLOT(slot_out0_clicked()));
+    }
 }
 
 HexBitAnalysis::~HexBitAnalysis()
@@ -85,18 +92,22 @@ HexBitAnalysis::~HexBitAnalysis()
     delete ui;
 }
 
-void HexBitAnalysis::on_lineEdit_Input_textChanged(const QString &arg1)
+void HexBitAnalysis::input_changed(QString input)
 {
-    QString input;
     int i;
     ulong hex;
     bool ok;
 
-    input = ui->lineEdit_Input->text().trimmed();
+    styleSheet.clear();
+
+    input = input.trimmed();
     if (input.startsWith("0x"))
-        ui->lineEdit_Input->setText(input.remove(0, 2));
+        input = input.remove(0, 2);
 
     hex = input.toULong(&ok, 16);
+
+    ui->lineEdit_Input->setText(input.toUpper());
+    ui->lineEdit_Output->setText(QString("%1").arg(hex, 8, 16, QChar('0')).toUpper());
 
     for (i = 0; i < 32; i++) {
         if ((1 << i) & hex) {
@@ -104,21 +115,66 @@ void HexBitAnalysis::on_lineEdit_Input_textChanged(const QString &arg1)
             LabelOrig0[i]->setStyleSheet(QString::fromUtf8("QLabel{\n"
                                             "	background-color:rgb(255, 0, 0);\n"
                                             "}"));
-            GrpboxOrig0[i]->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
-                                                            "	border:4px inset lightGray;\n"
-                                                            "	border-radius: 3px;\n"
-                                                            "	background: white\n"
-                                                            "}"));
+
+            PushButtonOut0[i]->setText("1");
+            PushButtonOut0[i]->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+                                            "	background-color:rgb(255, 0, 0);\n"
+                                            "}"));
         } else {
             LabelOrig0[i]->setText("0");
             LabelOrig0[i]->setStyleSheet(QString::fromUtf8("QLabel{\n"
                                             "	background-color:rgb(85, 170, 255);\n"
                                             "}"));
-            GrpboxOrig0[i]->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
-                                                            "	border:4px outset lightGray;\n"
-                                                            "	border-radius: 3px;\n"
-                                                            "	background: white\n"
-                                                            "}"));
+
+            PushButtonOut0[i]->setText("0");
+            PushButtonOut0[i]->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+                                            "	background-color:rgb(85, 170, 255);\n"
+                                            "}"));
         }
     }
+
+}
+
+void HexBitAnalysis::on_lineEdit_Input_textChanged(const QString &arg1)
+{
+    input_changed(arg1);
+}
+
+void HexBitAnalysis::slot_out0_clicked(void)
+{
+    int i;
+    ulong hex = 0;
+    QPushButton *BTN = qobject_cast<QPushButton *>(this->sender());
+
+    if (BTN->text().toUInt() == 0)
+        BTN->setText("1");
+    else
+        BTN->setText("0");
+
+    if (!styleSheet.contains(BTN) || styleSheet[BTN].isEmpty()) {
+        styleSheet.insert(BTN, BTN->styleSheet());
+        BTN->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+                                        "	background-color:rgb(255, 170, 0);\n"
+                                        "}"));
+    } else {
+        BTN->setStyleSheet(styleSheet[BTN]);
+        styleSheet.remove(BTN);
+    }
+
+    for (i = 0; i < 32; i++) {
+        hex |= (PushButtonOut0[i]->text().toUInt(0, 2)) << i;
+    }
+
+    ui->lineEdit_Output->setText(QString("%1").arg(hex, 8, 16, QChar('0')).toUpper());
+}
+
+void HexBitAnalysis::on_pushButton_Restore_clicked()
+{
+    input_changed(ui->lineEdit_Input->text());
+}
+
+void HexBitAnalysis::on_pushButton_Clear_clicked()
+{
+    ui->lineEdit_Input->setText("");
+    input_changed(ui->lineEdit_Input->text());
 }
