@@ -17,13 +17,16 @@ public:
     ~HexBitAnalysis();
 
 private slots:
-    void on_lineEdit_Input_textChanged(const QString &arg1);
+    void on_lineEdit_Input0_textChanged(const QString &arg1);
 
     void slot_out0_clicked(void);
+    void slot_sel0_clicked(void);
 
-    void on_pushButton_Restore_clicked();
+    void on_pushButton_Restore0_clicked();
 
-    void on_pushButton_Clear_clicked();
+    void on_pushButton_Clear0_clicked();
+
+    void on_pushButton_Reset0_clicked();
 
 private:
     void input_changed(QString input);
@@ -33,7 +36,11 @@ private:
 
     QList<QLabel *> LabelOrig0;
     QList<QPushButton *> PushButtonOut0;
-    QMap<QPushButton *, QString> styleSheet;
+    QList<QCheckBox *> CheckBoxSel0;
+
+    QMap<QPushButton *, QString> styleSheetMap;
+    QMap<QCheckBox *, QPushButton *> ChkBtnPair;
+    QMap<QCheckBox *, QLabel *> ChkLblPair;
 };
 
 #endif // HEXBITANALYSIS_H

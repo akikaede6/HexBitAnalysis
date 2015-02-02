@@ -18,16 +18,19 @@
     <rect>
      <x>10</x>
      <y>0</y>
-     <width>821</width>
+     <width>871</width>
      <height>41</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="Line" name="line_2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-        <horstretch>1</horstretch>
+        <horstretch>6</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
@@ -50,7 +53,7 @@
       </property>
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-        <horstretch>1</horstretch>
+        <horstretch>4</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
@@ -112,7 +115,7 @@
     <rect>
      <x>10</x>
      <y>50</y>
-     <width>821</width>
+     <width>871</width>
      <height>261</height>
     </rect>
    </property>
@@ -133,7 +136,7 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>801</width>
+      <width>851</width>
       <height>51</height>
      </rect>
     </property>
@@ -144,12 +147,12 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;&amp;amp;Input Data &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_Input</cstring>
+        <cstring>lineEdit_Input0</cstring>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_Input">
+      <widget class="QLineEdit" name="lineEdit_Input0">
        <property name="font">
         <font>
          <pointsize>18</pointsize>
@@ -182,16 +185,27 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;&amp;amp;Output Data &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_Output</cstring>
+        <cstring>lineEdit_Output0</cstring>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_Output">
+      <widget class="QLineEdit" name="lineEdit_Output0">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="font">
         <font>
          <pointsize>18</pointsize>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{
+	background-color:rgb(246, 246, 246);
+}</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -209,16 +223,23 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_Restore">
+      <widget class="QPushButton" name="pushButton_Restore0">
        <property name="text">
         <string>Restore</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_Clear">
+      <widget class="QPushButton" name="pushButton_Clear0">
        <property name="text">
         <string> Clear </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_Reset0">
+       <property name="text">
+        <string>Reset</string>
        </property>
       </widget>
      </item>
@@ -229,7 +250,7 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>801</width>
+      <width>851</width>
       <height>20</height>
      </rect>
     </property>
@@ -242,15 +263,18 @@
      <rect>
       <x>10</x>
       <y>200</y>
-      <width>801</width>
+      <width>851</width>
       <height>41</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QGroupBox" name="groupBox_2">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -270,23 +294,23 @@
        <widget class="QLabel" name="label_7">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>10</x>
           <y>10</y>
           <width>31</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;HEX&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt; HEX&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_5">
+       <widget class="QLineEdit" name="InputSel0Hex">
         <property name="geometry">
          <rect>
-          <x>80</x>
+          <x>60</x>
           <y>10</y>
-          <width>113</width>
-          <height>21</height>
+          <width>131</width>
+          <height>23</height>
          </rect>
         </property>
         <property name="font">
@@ -298,7 +322,7 @@
        <widget class="QLabel" name="label_8">
         <property name="geometry">
          <rect>
-          <x>210</x>
+          <x>220</x>
           <y>10</y>
           <width>31</width>
           <height>21</height>
@@ -308,13 +332,13 @@
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;DEC&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_6">
+       <widget class="QLineEdit" name="InputSel0Dec">
         <property name="geometry">
          <rect>
-          <x>250</x>
+          <x>270</x>
           <y>10</y>
-          <width>91</width>
-          <height>21</height>
+          <width>111</width>
+          <height>23</height>
          </rect>
         </property>
         <property name="font">
@@ -323,47 +347,15 @@
          </font>
         </property>
        </widget>
-       <widget class="QLabel" name="label_9">
-        <property name="geometry">
-         <rect>
-          <x>420</x>
-          <y>10</y>
-          <width>54</width>
-          <height>12</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>0</y>
-          <width>22</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QCheckBox" name="checkBox">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
       </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer_6">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -376,7 +368,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -396,62 +388,6 @@
        <property name="checked">
         <bool>false</bool>
        </property>
-       <widget class="QLabel" name="label_4">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;HEX&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_3">
-        <property name="geometry">
-         <rect>
-          <x>80</x>
-          <y>10</y>
-          <width>113</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-         </font>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_5">
-        <property name="geometry">
-         <rect>
-          <x>210</x>
-          <y>10</y>
-          <width>31</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;DEC&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_4">
-        <property name="geometry">
-         <rect>
-          <x>250</x>
-          <y>10</y>
-          <width>91</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-         </font>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_6">
         <property name="geometry">
          <rect>
@@ -465,24 +401,61 @@
          <string>TextLabel</string>
         </property>
        </widget>
-       <widget class="QWidget" name="verticalLayoutWidget_3">
+       <widget class="QLineEdit" name="OutputSel0Dec">
+        <property name="geometry">
+         <rect>
+          <x>270</x>
+          <y>10</y>
+          <width>111</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="OutputSel0Hex">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>10</y>
+          <width>131</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_9">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;DEC&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_10">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>0</y>
-          <width>22</width>
-          <height>41</height>
+          <y>10</y>
+          <width>31</width>
+          <height>21</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QCheckBox" name="checkBox_4">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt; HEX&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
        </widget>
       </widget>
      </item>
@@ -493,7 +466,7 @@
      <rect>
       <x>10</x>
       <y>180</y>
-      <width>801</width>
+      <width>851</width>
       <height>20</height>
      </rect>
     </property>
@@ -506,7 +479,7 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>801</width>
+      <width>854</width>
       <height>121</height>
      </rect>
     </property>
