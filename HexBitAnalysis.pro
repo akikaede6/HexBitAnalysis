@@ -13,13 +13,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        hexbitanalysis.cpp
+        hexbitanalysis.cpp \
+    mywidget.cpp
 
-HEADERS  += hexbitanalysis.h
+HEADERS  += hexbitanalysis.h \
+    mywidget.h
 
 FORMS    += hexbitanalysis.ui
 
 RESOURCES += \
     image.qrc
+
+RC_FILE = appicon.rc
 
 OTHER_FILES +=
