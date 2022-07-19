@@ -83,7 +83,7 @@ void MyGroupBox::paintEvent(QPaintEvent *event)
 
 void MyGroupBox::mousePressEvent(QMouseEvent *event)
 {
-    mouseDown = TRUE;
+    mouseDown = true;
     point_start = event->pos();
     point_end = event->pos();
     qDebug() << "mousePressEvent: start: " << point_start << ", end: " << point_end;
@@ -94,7 +94,7 @@ void MyGroupBox::mouseReleaseEvent(QMouseEvent *event)
     if (mouseDown == false)
         return;
 
-    mouseDown = FALSE;
+    mouseDown = false;
     point_end = event->pos();
     qDebug() << "mouseReleaseEvent: start: " << point_start << ", end: " << point_end;
     update();
