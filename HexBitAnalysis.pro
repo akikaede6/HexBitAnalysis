@@ -13,11 +13,18 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+    analsiswidget.cpp \
+    binarywidget.cpp \
         hexbitanalysis.cpp \
-    mywidget.cpp
+    mywidget.cpp \
+    mainwindow.cpp
 
 HEADERS  += hexbitanalysis.h \
-    mywidget.h
+    analsiswidget.h \
+    binarywidget.h \
+    mywidget.h \
+    mainwindow.h \
+    util.h
 
 FORMS    += hexbitanalysis.ui
 

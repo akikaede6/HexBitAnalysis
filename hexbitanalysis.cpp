@@ -17,7 +17,7 @@ void* get_widget_by_name(const QString name)
 }
 
 HexBitAnalysis::HexBitAnalysis(QWidget *parent) :
-    QDialog(parent),
+//    QDialog(parent),
     ui(new Ui::HexBitAnalysis)
 {
     int i;
