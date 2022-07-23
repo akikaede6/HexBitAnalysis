@@ -3,8 +3,6 @@
 
 #include <QWidget>
 
-class QHBoxLayout;
-class QGridLayout;
 class QLabel;
 class QButtonGroup;
 class QCheckBox;
@@ -19,20 +17,20 @@ public:
 public slots:
     void onInputChanged(const QString &input);
     void onBtnClicked(QAbstractButton *clickedBtn);
+    void onCheckBoxClicked();
+    void onClearBtnClicked();
+    void onResetBtnClicked();
 
 signals:
     void btnClicked(ulong hex);
+    void checkLabelOutput(const ulong &dec);
+    void checkBtnOutput(const ulong &dec);
 
 private:
     void initConnection();
-    QFrame *createLine();
+    static QFrame *createLine();
 
 private:
-    QHBoxLayout *m_mainLayout;
-    QGridLayout *m_binaryLayout_1;
-    QGridLayout *m_binaryLayout_2;
-    QGridLayout *m_binaryLayout_3;
-    QGridLayout *m_binaryLayout_4;
     QList<QLabel *> m_labelList;
     QButtonGroup *m_binaryBtnGroup;
     QList<QCheckBox *> m_checkBoxList;

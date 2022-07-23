@@ -15,18 +15,19 @@ TEMPLATE = app
 SOURCES += main.cpp\
     analsiswidget.cpp \
     binarywidget.cpp \
-        hexbitanalysis.cpp \
-    mywidget.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    mousegroupbox.cpp \
+    selectedwidget.cpp
 
-HEADERS  += hexbitanalysis.h \
+HEADERS  += \
     analsiswidget.h \
     binarywidget.h \
-    mywidget.h \
     mainwindow.h \
+    mousegroupbox.h \
+    selectedwidget.h \
     util.h
 
-FORMS    += hexbitanalysis.ui
+FORMS    +=
 
 RESOURCES += \
     image.qrc

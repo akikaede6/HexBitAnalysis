@@ -1,4 +1,3 @@
-#include "hexbitanalysis.h"
 #include "mainwindow.h"
 #include <QApplication>
 #include <QStyleFactory>
@@ -6,12 +5,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    qInfo() << QStyleFactory::keys();
-    a.setStyle(QStyleFactory::create("Fusion"));
-    //    HexBitAnalysis w;
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
     MainWindow w;
-    //    w.setFixedSize(600, 400);
-    w.setWindowFlags(Qt::Dialog /* | Qt::WindowMinimizeButtonHint*/);
+    w.setWindowFlags(Qt::Dialog);
     w.show();
 
     return a.exec();
