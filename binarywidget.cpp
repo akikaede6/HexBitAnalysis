@@ -23,12 +23,13 @@ BinaryWidget::BinaryWidget(QWidget *parent)
     auto *line_1 = createLine();
     auto *line_2 = createLine();
     auto *line_3 = createLine();
-    QFont samplefont;
     for (int i = 0; i < Bit; i++) {
         auto *binaryNumLabel = new QLabel(QString::number(Bit - i - 1), this);
-        (i % HexMaxLength == 0)
-            ? binaryNumLabel->setStyleSheet("QLabel{font-weight:bold;color:#9933FA;}")
-            : binaryNumLabel->setStyleSheet("QLabel{font-weight:bold;color:#FF7F50;}");
+        if (i % HexMaxLength == 0)
+            binaryNumLabel->setStyleSheet("QLabel{font-weight:bold;color:#9933FA;}");
+        else
+            binaryNumLabel->setStyleSheet("QLabel{font-weight:bold;color:#FF7F50;}");
+        m_numLabelList.append(binaryNumLabel);
 
         auto *binaryLabel = new QLabel(QString::number(0), this);
         binaryLabel->setStyleSheet(QString::fromUtf8("QLabel{background-color:#B0E0E6;}"));
@@ -38,12 +39,16 @@ BinaryWidget::BinaryWidget(QWidget *parent)
         auto *binaryBtn = new QPushButton(QString::number(0), this);
         binaryBtn->setStyleSheet(QString::fromUtf8("QPushButton{background-color:#B0E0E6;}"));
         m_binaryBtnGroup->addButton(binaryBtn, i);
-        //TODO: size adjust
-        binaryBtn->setMaximumWidth(25);
-        binaryLabel->setMinimumWidth(binaryBtn->width());
 
         auto *checkBox = new QCheckBox(this);
         m_checkBoxList.append(checkBox);
+        binaryBtn->setMaximumWidth(FontSize::fontPixel());
+        binaryLabel->setMinimumWidth(binaryBtn->width());
+
+        binaryNumLabel->setFont(FontSize::fontSize());
+        binaryLabel->setFont(FontSize::fontSize());
+        binaryBtn->setFont(FontSize::fontSize());
+
         QGridLayout *binaryLayout = nullptr;
         switch (i / HexMaxLength) {
         case 0:
@@ -63,7 +68,7 @@ BinaryWidget::BinaryWidget(QWidget *parent)
         }
         binaryLayout->addWidget(binaryNumLabel, 0, i, Qt::AlignCenter);
         binaryLayout->addWidget(binaryLabel, 1, i, Qt::AlignCenter);
-        binaryLayout->addWidget(binaryBtn, 2, i);
+        binaryLayout->addWidget(binaryBtn, 2, i, Qt::AlignCenter);
         binaryLayout->addWidget(checkBox, 3, i, Qt::AlignCenter);
         binaryLayout->setSpacing(binaryBtn->width() / 5);
     }
@@ -156,6 +161,17 @@ void BinaryWidget::onResetBtnClicked()
         m_binaryBtnGroup->button(i)->setStyleSheet(
             QString::fromUtf8("QPushButton{background-color:#B0E0E6;}"));
         m_labelList.at(i)->setStyleSheet(QString::fromUtf8("QLabel{background-color:#B0E0E6;}"));
+    }
+}
+
+void BinaryWidget::onFontSizeChanged()
+{
+    for (int i = 0; i < Bit; i++) {
+        m_numLabelList.at(i)->setFont(FontSize::fontSize());
+        m_labelList.at(i)->setFont(FontSize::fontSize());
+        m_binaryBtnGroup->button(i)->setFont(FontSize::fontSize());
+        m_binaryBtnGroup->button(i)->setMaximumWidth(FontSize::fontPixel());
+        m_labelList.at(i)->setMinimumWidth(m_binaryBtnGroup->button(i)->width());
     }
 }
 

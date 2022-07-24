@@ -20,6 +20,7 @@ public slots:
     void onCheckBoxClicked();
     void onClearBtnClicked();
     void onResetBtnClicked();
+    void onFontSizeChanged();
 
 signals:
     void btnClicked(ulong hex);
@@ -31,6 +32,7 @@ private:
     static QFrame *createLine();
 
 private:
+    QList<QLabel *> m_numLabelList;
     QList<QLabel *> m_labelList;
     QButtonGroup *m_binaryBtnGroup;
     QList<QCheckBox *> m_checkBoxList;

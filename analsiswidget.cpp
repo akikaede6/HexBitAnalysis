@@ -90,6 +90,10 @@ void AnalsisWidget::initConnection()
     connect(m_restoreBtn, &QPushButton::clicked, this, &AnalsisWidget::onRestoreBtnClicked);
     connect(this, &AnalsisWidget::restoreBinary, m_binaryWidget, &BinaryWidget::onInputChanged);
     connect(this, &AnalsisWidget::restoreBinary, this, &AnalsisWidget::onInputChanged);
+    connect(this,
+            &AnalsisWidget::onFontSizeChanged,
+            m_binaryWidget,
+            &BinaryWidget::onFontSizeChanged);
 }
 
 void AnalsisWidget::onInputChanged(const QString &input)

@@ -15,13 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
     analsiswidget.cpp \
     binarywidget.cpp \
+    fontdialog.cpp \
     mainwindow.cpp \
     mousegroupbox.cpp \
-    selectedwidget.cpp
+    selectedwidget.cpp \
+    util.cpp
 
 HEADERS  += \
     analsiswidget.h \
     binarywidget.h \
+    fontdialog.h \
     mainwindow.h \
     mousegroupbox.h \
     selectedwidget.h \

@@ -1,15 +1,20 @@
 #include "mainwindow.h"
 #include "analsiswidget.h"
+#include "fontdialog.h"
+#include "util.h"
 
 #include <QLabel>
+#include <QMenuBar>
 #include <QPushButton>
 #include <QTimer>
 #include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QWidget(parent)
-    , m_mainLayout(new QVBoxLayout(this))
+    : QMainWindow(parent)
+    , m_mainWidget(new QWidget(this))
+    , m_mainLayout(new QVBoxLayout(m_mainWidget))
 {
+    setFont(FontSize::fontSize());
     auto *titleLayout = new QHBoxLayout();
     auto *titleLabel = new QLabel(tr("Hex Bit Analysis"), this);
     titleLabel->setText("Hex Bit Analysis");
@@ -20,17 +25,24 @@ MainWindow::MainWindow(QWidget *parent)
     titleLayout->addWidget(titleLabel, this->geometry().width() / 2, Qt::AlignCenter);
     titleLayout->addWidget(addBtn, 0, Qt::AlignRight);
     titleLayout->addWidget(deleteBtn, 0, Qt::AlignRight);
-    m_mainLayout->addLayout(titleLayout);
 
     auto *analysisWidget = new AnalsisWidget(this);
+    connect(this, &MainWindow::onFontSizeChanged, analysisWidget, &AnalsisWidget::onFontSizeChanged);
+    m_mainLayout->addLayout(titleLayout);
     m_mainLayout->addWidget(analysisWidget);
+
+    setCentralWidget(m_mainWidget);
     connect(addBtn, &QPushButton::clicked, this, &MainWindow::onAddBtnClicked);
     connect(deleteBtn, &QPushButton::clicked, this, &MainWindow::onDeleteBtnClicked);
+
+    createActions();
+    createMenus();
 }
 
 void MainWindow::onAddBtnClicked()
 {
     auto *analysisWidget = new AnalsisWidget(this);
+    connect(this, &MainWindow::onFontSizeChanged, analysisWidget, &AnalsisWidget::onFontSizeChanged);
     m_mainLayout->addWidget(analysisWidget);
 }
 
@@ -44,10 +56,35 @@ void MainWindow::onDeleteBtnClicked()
     QTimer::singleShot(0, this, [&] { resize(sizeHint()); });
 }
 
+void MainWindow::onEditFontClicked()
+{
+    auto *fontDialog = new FontDialog(this);
+    connect(fontDialog, &FontDialog::fontChanged, this, [&] {
+        this->setFont(FontSize::fontSize());
+        m_fontAct->setFont(FontSize::fontSize());
+        QTimer::singleShot(0, this, [&] { resize(sizeHint()); });
+    });
+    connect(fontDialog, &FontDialog::fontChanged, this, &MainWindow::onFontSizeChanged);
+    fontDialog->show();
+}
+
 void MainWindow::setBtnIcon(const QString &path, QPushButton *button)
 {
     QPixmap pixmap(path);
     QIcon ButtonIcon(pixmap);
     button->setIcon(ButtonIcon);
     button->setIconSize(pixmap.rect().size());
+}
+
+void MainWindow::createMenus()
+{
+    m_editMenu = menuBar()->addMenu(tr("&Edit"));
+    m_editMenu->addAction(m_fontAct);
+}
+
+void MainWindow::createActions()
+{
+    m_fontAct = new QAction(tr("&Font"), this);
+    m_fontAct->setStatusTip(tr("edit font size"));
+    connect(m_fontAct, &QAction::triggered, this, &MainWindow::onEditFontClicked);
 }
