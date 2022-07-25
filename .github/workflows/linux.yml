@@ -1,0 +1,33 @@
+on: [push]
+
+jobs:
+  run_test:
+    runs-on: ubuntu-18.04
+    name: Test Action
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: "akikaede6/HexBitAnalysis"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build Qt5 Application
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qt5-default qtdeclarative5-dev cmake git
+          if [ -z "${{ github.head_ref }}" ]; then BRANCH=${{ github.ref_name }}; REPOSITORY=${{ github.repository }}; else BRANCH=${{ github.head_ref }}; REPOSITORY=${{ github.event.pull_request.head.repo.full_name }}; fi
+          echo "Cloning branch $BRANCH from repository $REPOSITORY..."
+          git clone https://github.com/akikaede6/HexBitAnalysis.git
+          cd HexBitAnalysis/
+          qmake
+          make -j`nproc`  install DESTDIR=../AppDir
+      - name: Build AppImage
+        uses: AppImageCrafters/build-appimage@master
+        with:
+          recipe: "./appimage-demo-qt5/AppImageBuilder.yml"
+        env:
+          UPDATE_INFO: gh-releases-zsync|AppImageCrafters|appimage-demo-qt5|latest|*x86_64.AppImage.zsync
+      - uses: actions/upload-artifact@v2
+        with:
+          name: AppImage
+          path: './*.AppImage*'
