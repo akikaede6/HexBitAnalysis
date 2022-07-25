@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = HexBitAnalysis
 TEMPLATE = app
 
+CONFIG += c++17
 
 SOURCES += main.cpp\
     analsiswidget.cpp \
