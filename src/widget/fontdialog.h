@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QWidget>
 
-class QLineEdit;
+class QSpinBox;
 class FontDialog : public QDialog
 {
     Q_OBJECT
@@ -18,7 +18,7 @@ public slots:
     void onConfirmBtnClicked();
 
 private:
-    QLineEdit *m_fontEdit;
+    QSpinBox *m_fontBox;
     QPushButton *m_confirmBtn;
     QPushButton *m_cancelBtn;
 };

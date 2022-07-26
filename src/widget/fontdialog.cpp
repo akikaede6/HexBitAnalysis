@@ -1,14 +1,14 @@
 #include "fontdialog.h"
-#include "util.h"
+#include "../util.h"
 
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QLineEdit>
 #include <QPushButton>
+#include <QSpinBox>
 
 FontDialog::FontDialog(QWidget *parent)
     : QDialog(parent)
-    , m_fontEdit(new QLineEdit(this))
+    , m_fontBox(new QSpinBox(this))
     , m_confirmBtn(new QPushButton(tr("confirm"), this))
     , m_cancelBtn(new QPushButton(tr("cancel"), this))
 {
@@ -17,10 +17,11 @@ FontDialog::FontDialog(QWidget *parent)
     auto *fontLayout = new QHBoxLayout(this);
     auto *buttonLayout = new QHBoxLayout(this);
     auto *fontLabel = new QLabel(tr("Font"), this);
-    auto *pxLabel = new QLabel(tr("px"), this);
+    m_fontBox->setMinimum(0);
+    m_fontBox->setSuffix("px");
+    m_fontBox->setValue(FontSize::fontPixel());
     fontLayout->addWidget(fontLabel);
-    fontLayout->addWidget(m_fontEdit);
-    fontLayout->addWidget(pxLabel);
+    fontLayout->addWidget(m_fontBox);
     buttonLayout->addWidget(m_confirmBtn);
     buttonLayout->addWidget(m_cancelBtn);
     mainLayout->addLayout(fontLayout);
@@ -32,7 +33,7 @@ FontDialog::FontDialog(QWidget *parent)
 
 void FontDialog::onConfirmBtnClicked()
 {
-    FontSize::setFontSize(m_fontEdit->text().toInt());
+    FontSize::setFontSize(m_fontBox->value());
     setFont(FontSize::fontSize());
     emit fontChanged();
     this->close();

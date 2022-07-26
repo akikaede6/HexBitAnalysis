@@ -27,7 +27,7 @@ function Main() {
 
     New-Item -ItemType Directory $archiveName
     # 拷贝exe
-    Copy-Item release\$targetName $archiveName\
+    Copy-Item build\Debug\$targetName $archiveName\
     # 拷贝依赖
     windeployqt --qmldir . --plugindir $archiveName\plugins --no-translations --compiler-runtime $archiveName\$targetName
     # 删除不必要的文件
@@ -40,7 +40,7 @@ function Main() {
     $sdkDll="{0}Redist\{1}ucrt\DLLs\{2}\*.dll" -f $env:winSdkDir.Trim(),$env:winSdkVer.Trim(),$env:msvcArch
     Copy-Item $sdkDll $archiveName\
     # 打包zip
-    Compress-Archive -Path $archiveName $archiveName'.zip'
+    Compress-Archive -Path $archiveName -DestinationPath $archiveName'.zip'
 }
 
 if ($null -eq $archiveName || $null -eq $targetName) {

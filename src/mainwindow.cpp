@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "analsiswidget.h"
-#include "fontdialog.h"
 #include "util.h"
+#include "widget/fontdialog.h"
 
 #include <QLabel>
 #include <QMenuBar>
@@ -20,8 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     titleLabel->setText("Hex Bit Analysis");
     auto *addBtn = new QPushButton(this);
     auto *deleteBtn = new QPushButton(this);
-    setBtnIcon(":/icon/icon/plus.png", addBtn);
-    setBtnIcon(":/icon/icon/minus.png", deleteBtn);
+    setBtnIcon(":/icon/plus.png", addBtn);
+    setBtnIcon(":/icon/minus.png", deleteBtn);
     titleLayout->addWidget(titleLabel, this->geometry().width() / 2, Qt::AlignCenter);
     titleLayout->addWidget(addBtn, 0, Qt::AlignRight);
     titleLayout->addWidget(deleteBtn, 0, Qt::AlignRight);

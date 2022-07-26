@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=HexBitAnalysis
+Exec=/usr/bin/HexBitAnalysis
+Icon=app
+Categories=Development;
+Terminal=false

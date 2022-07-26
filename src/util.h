@@ -21,7 +21,4 @@ private:
 };
 inline int FontSize::m_fontSize = defaultFont;
 
-const int EditMaxWidth = HexMaxLength * FontSize::fontPixel();
-
-
 #endif // UTIL_H

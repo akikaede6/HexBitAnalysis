@@ -26,8 +26,8 @@ AnalsisWidget::AnalsisWidget(QWidget *parent)
 
     m_outputEdit->setText("00000000");
     m_inputEdit->setMaxLength(HexMaxLength);
-    m_inputEdit->setMaximumWidth(EditMaxWidth);
-    m_outputEdit->setMaximumWidth(EditMaxWidth);
+    m_inputEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
+    m_outputEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
     m_outputEdit->setReadOnly(true);
 
     dataLayout->addWidget(inputLabel, 0, Qt::AlignLeft);
@@ -94,6 +94,18 @@ void AnalsisWidget::initConnection()
             &AnalsisWidget::onFontSizeChanged,
             m_binaryWidget,
             &BinaryWidget::onFontSizeChanged);
+    connect(this, &AnalsisWidget::onFontSizeChanged, this, [&] {
+        m_inputEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
+        m_outputEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
+    });
+    connect(this,
+            &AnalsisWidget::onFontSizeChanged,
+            m_selectedLabelWidget,
+            &SelectedWidget::onFontSizeChanged);
+    connect(this,
+            &AnalsisWidget::onFontSizeChanged,
+            m_selectedBtnWidget,
+            &SelectedWidget::onFontSizeChanged);
 }
 
 void AnalsisWidget::onInputChanged(const QString &input)

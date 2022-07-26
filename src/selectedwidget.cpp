@@ -13,8 +13,8 @@ SelectedWidget::SelectedWidget(QWidget *parent)
     auto *mainLayout = new QHBoxLayout(this);
     auto *hexLabel = new QLabel("HEX", this);
     auto *decLabel = new QLabel("DEC", this);
-    m_hexDisEdit->setMaximumWidth(EditMaxWidth);
-    m_decDisEdit->setMaximumWidth(EditMaxWidth);
+    m_hexDisEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
+    m_decDisEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
     m_hexDisEdit->setReadOnly(true);
     m_decDisEdit->setReadOnly(true);
     mainLayout->addWidget(hexLabel, 0, Qt::AlignCenter);
@@ -33,4 +33,10 @@ void SelectedWidget::onClearBtnClicked()
 {
     m_hexDisEdit->setText("0x0");
     m_decDisEdit->setText("0");
+}
+
+void SelectedWidget::onFontSizeChanged()
+{
+    m_hexDisEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
+    m_decDisEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
 }

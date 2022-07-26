@@ -17,14 +17,14 @@ function Main() {
 
     New-Item -ItemType Directory $archiveName
     # 拷贝exe
-    Copy-Item release\$targetName $archiveName\
+    Copy-Item build\$targetName $archiveName\
     # 拷贝依赖
     windeployqt --qmldir . --plugindir $archiveName\plugins --no-translations --compiler-runtime $archiveName\$targetName
     # 删除不必要的文件
     $excludeList = @("*.qmlc", "*.ilk", "*.exp", "*.lib", "*.pdb")
     Remove-Item -Path $archiveName -Include $excludeList -Recurse -Force
     # 打包zip
-    Compress-Archive -Path $archiveName $archiveName'.zip'
+    Compress-Archive -Path $archiveName -DestinationPath $archiveName'.zip'
 }
 
 if ($null -eq $archiveName || $null -eq $targetName) {

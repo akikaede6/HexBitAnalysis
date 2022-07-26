@@ -1,6 +1,6 @@
 #include "binarywidget.h"
-#include "mousegroupbox.h"
 #include "util.h"
+#include "widget/mousegroupbox.h"
 
 #include <QButtonGroup>
 #include <QCheckBox>

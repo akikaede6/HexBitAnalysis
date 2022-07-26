@@ -3,13 +3,15 @@ on:
   # push代码时触发workflow
   push:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'ci/**'
       - '.github/workflows/windows.yml'
   pull_request:
     paths:
-      - '*.pro'
+      - 'CMakeLists.txt'
       - 'src/**'
+      - 'ci/**'
       - '.github/workflows/windows.yml'
 jobs:
   build:
@@ -84,8 +86,8 @@ jobs:
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.msvc_arch }}
-          qmake
-          nmake
+          cmake -H. build -D CMAKE_BUILD_TYPE=Release
+          cmake --build build
           echo winSdkDir=%WindowsSdkDir% >> %GITHUB_ENV%
           echo winSdkVer=%WindowsSdkVersion% >> %GITHUB_ENV%
           echo vcToolsInstallDir=%VCToolsInstallDir% >> %GITHUB_ENV%
@@ -94,7 +96,7 @@ jobs:
       - name: package
         id: package
         env:
-          archiveName: ${{ matrix.qt_ver }}-${{ matrix.qt_target }}-${{ matrix.qt_arch }}
+          archiveName: HexBitAnalysis-${{ matrix.qt_ver }}-${{ matrix.qt_target }}-${{ matrix.qt_arch }}
           msvcArch: ${{ matrix.msvc_arch }}
         shell: pwsh
         run: |
@@ -106,7 +108,7 @@ jobs:
       # 上传artifacts
       - uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.package.outputs.packageName }}
+          name: ${{ steps.package.outputs.packageName }}-${{ github.run_id }}
           path: ${{ steps.package.outputs.packageName }}
       # tag 上传Release
       - name: uploadRelease
@@ -115,6 +117,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.package.outputs.packageName }}.zip
-          asset_name: ${{ steps.package.outputs.packageName }}.zip
+          asset_name: HexBitAnalysis-${{ github.ref_name }}-msvc.zip
           tag: ${{ github.ref }}
           overwrite: true
