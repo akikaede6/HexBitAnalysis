@@ -53,7 +53,8 @@ void MainWindow::onDeleteBtnClicked()
         m_mainLayout->removeWidget(deletedWidget);
         deletedWidget->deleteLater();
     }
-    QTimer::singleShot(0, this, [&] { resize(sizeHint()); });
+
+    QTimer::singleShot(0, this, [&] { adjustSize(); });
 }
 
 void MainWindow::onEditFontClicked()
@@ -62,7 +63,7 @@ void MainWindow::onEditFontClicked()
     connect(fontDialog, &FontDialog::fontChanged, this, [&] {
         this->setFont(FontSize::fontSize());
         m_fontAct->setFont(FontSize::fontSize());
-        QTimer::singleShot(0, this, [&] { resize(sizeHint()); });
+        QTimer::singleShot(0, this, [&] { adjustSize(); });
     });
     connect(fontDialog, &FontDialog::fontChanged, this, &MainWindow::onFontSizeChanged);
     fontDialog->show();
