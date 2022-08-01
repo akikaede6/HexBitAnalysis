@@ -14,8 +14,8 @@ FontDialog::FontDialog(QWidget *parent)
 {
     setFont(FontSize::fontSize());
     auto *mainLayout = new QVBoxLayout(this);
-    auto *fontLayout = new QHBoxLayout(this);
-    auto *buttonLayout = new QHBoxLayout(this);
+    auto *fontLayout = new QHBoxLayout();
+    auto *buttonLayout = new QHBoxLayout();
     auto *fontLabel = new QLabel(tr("Font"), this);
     m_fontBox->setMinimum(0);
     m_fontBox->setSuffix("px");

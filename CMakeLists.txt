@@ -12,6 +12,7 @@ set(SOURCES
   src/widget/fontdialog.cpp
   src/mainwindow.cpp
   src/widget/mousegroupbox.cpp
+  src/widget/bitdialog.cpp
   src/selectedwidget.cpp
   src/util.cpp
   icon/image.qrc
@@ -26,6 +27,7 @@ set(HEADER_FILES
   src/widget/mousegroupbox.h
   src/selectedwidget.h
   src/util.h
+  src/widget/bitdialog.h
   )
 add_executable(HexBitAnalysis ${SOURCES})
 target_link_libraries(HexBitAnalysis PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

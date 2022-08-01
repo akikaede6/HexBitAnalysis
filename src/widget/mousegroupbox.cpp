@@ -51,14 +51,14 @@ void MouseGroupBox::mouseReleaseEvent(QMouseEvent *event)
     update();
 
     if (point_start.y() < point_end.y()) {
-        for (int i = 0; i < Bit; i++) {
+        for (int i = 0; i < BitChange::bit(); i++) {
             if (QRect(point_start, point_end)
                     .contains(m_binaryBtnGroup->button(i)->geometry().center())) {
                 m_binaryBtnGroup->button(i)->click();
             }
         }
     } else {
-        for (int i = 0; i < Bit; i++) {
+        for (int i = 0; i < BitChange::bit(); i++) {
             if (QRect(point_start, point_end).contains(m_checkBoxList.at(i)->geometry().center())) {
                 m_checkBoxList.at(i)->click();
             }

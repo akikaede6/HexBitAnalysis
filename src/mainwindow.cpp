@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "analsiswidget.h"
 #include "util.h"
+#include "widget/bitdialog.h"
 #include "widget/fontdialog.h"
 
 #include <QLabel>
@@ -34,6 +35,10 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(m_mainWidget);
     connect(addBtn, &QPushButton::clicked, this, &MainWindow::onAddBtnClicked);
     connect(deleteBtn, &QPushButton::clicked, this, &MainWindow::onDeleteBtnClicked);
+    connect(this, &MainWindow::onBitChanged, analysisWidget, &AnalsisWidget::onBitChanged);
+    connect(analysisWidget, &AnalsisWidget::updateWidget, this, [&] {
+        QTimer::singleShot(0, this, [&] { adjustSize(); });
+    });
 
     createActions();
     createMenus();
@@ -43,6 +48,7 @@ void MainWindow::onAddBtnClicked()
 {
     auto *analysisWidget = new AnalsisWidget(this);
     connect(this, &MainWindow::onFontSizeChanged, analysisWidget, &AnalsisWidget::onFontSizeChanged);
+    connect(this, &MainWindow::onBitChanged, analysisWidget, &AnalsisWidget::onBitChanged);
     m_mainLayout->addWidget(analysisWidget);
 }
 
@@ -63,10 +69,21 @@ void MainWindow::onEditFontClicked()
     connect(fontDialog, &FontDialog::fontChanged, this, [&] {
         this->setFont(FontSize::fontSize());
         m_fontAct->setFont(FontSize::fontSize());
+        m_bitAct->setFont(FontSize::fontSize());
         QTimer::singleShot(0, this, [&] { adjustSize(); });
     });
     connect(fontDialog, &FontDialog::fontChanged, this, &MainWindow::onFontSizeChanged);
     fontDialog->show();
+}
+
+void MainWindow::onEditBitClicked()
+{
+    auto *bitDialog = new BitDialog(this);
+    connect(bitDialog, &BitDialog::bitChanged, this, &MainWindow::onBitChanged);
+    connect(bitDialog, &BitDialog::bitChanged, this, [&] {
+        QTimer::singleShot(0, this, [&] { adjustSize(); });
+    });
+    bitDialog->show();
 }
 
 void MainWindow::setBtnIcon(const QString &path, QPushButton *button)
@@ -79,8 +96,9 @@ void MainWindow::setBtnIcon(const QString &path, QPushButton *button)
 
 void MainWindow::createMenus()
 {
-    m_editMenu = menuBar()->addMenu(tr("&Edit"));
+    m_editMenu = menuBar()->addMenu(tr("&Option"));
     m_editMenu->addAction(m_fontAct);
+    m_editMenu->addAction(m_bitAct);
 }
 
 void MainWindow::createActions()
@@ -88,4 +106,8 @@ void MainWindow::createActions()
     m_fontAct = new QAction(tr("&Font"), this);
     m_fontAct->setStatusTip(tr("edit font size"));
     connect(m_fontAct, &QAction::triggered, this, &MainWindow::onEditFontClicked);
+
+    m_bitAct = new QAction(tr("&Bit"), this);
+    m_bitAct->setStatusTip(tr("change bit"));
+    connect(m_bitAct, &QAction::triggered, this, &MainWindow::onEditBitClicked);
 }
