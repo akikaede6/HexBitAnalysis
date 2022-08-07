@@ -14,11 +14,13 @@ public:
 
 signals:
     void onFontSizeChanged();
+    void onBitChanged(int bit);
 
 public slots:
     void onAddBtnClicked();
     void onDeleteBtnClicked();
     void onEditFontClicked();
+    void onEditBitClicked();
 
 private:
     static void setBtnIcon(const QString &path, QPushButton *button);
@@ -30,5 +32,6 @@ private:
     QVBoxLayout *m_mainLayout;
     QMenu *m_editMenu{};
     QAction *m_fontAct{};
+    QAction *m_bitAct{};
 };
 #endif // MAINWINDOW_H

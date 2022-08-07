@@ -3,6 +3,7 @@
 #include "selectedwidget.h"
 #include "util.h"
 
+#include <iostream>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
@@ -25,9 +26,9 @@ AnalsisWidget::AnalsisWidget(QWidget *parent)
     auto *outputLabel = new QLabel(tr("Output Data"), this);
 
     m_outputEdit->setText("00000000");
-    m_inputEdit->setMaxLength(HexMaxLength);
-    m_inputEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
-    m_outputEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
+    m_inputEdit->setMaxLength(BitChange::hexMaxLength());
+    m_inputEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
+    m_outputEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
     m_outputEdit->setReadOnly(true);
 
     dataLayout->addWidget(inputLabel, 0, Qt::AlignLeft);
@@ -95,16 +96,19 @@ void AnalsisWidget::initConnection()
             m_binaryWidget,
             &BinaryWidget::onFontSizeChanged);
     connect(this, &AnalsisWidget::onFontSizeChanged, this, [&] {
-        m_inputEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
-        m_outputEdit->setMaximumWidth(HexMaxLength * FontSize::fontPixel());
+        m_inputEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
+        m_outputEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
     });
     connect(this,
             &AnalsisWidget::onFontSizeChanged,
             m_selectedLabelWidget,
             &SelectedWidget::onFontSizeChanged);
+    connect(this, &AnalsisWidget::onBitChanged, m_binaryWidget, &BinaryWidget::onBitChanged);
+    connect(this, &AnalsisWidget::onBitChanged, this, &AnalsisWidget::updateEdit);
+    connect(m_binaryWidget, &BinaryWidget::updateWidget, this, &AnalsisWidget::updateWidget);
     connect(this,
-            &AnalsisWidget::onFontSizeChanged,
-            m_selectedBtnWidget,
+            &AnalsisWidget::onBitChanged,
+            m_selectedLabelWidget,
             &SelectedWidget::onFontSizeChanged);
 }
 
@@ -114,22 +118,45 @@ void AnalsisWidget::onInputChanged(const QString &input)
     int pos = m_inputEdit->cursorPosition();
     m_inputEdit->setText(input.toUpper());
     m_inputEdit->setCursorPosition(pos);
-    m_outputEdit->setText(QString("%1").arg(hex, HexMaxLength, Hex, QChar('0')).toUpper());
+    m_outputEdit->setText(
+        QString("%1").arg(hex, BitChange::hexMaxLength(), Hex, QChar('0')).toUpper());
     m_outputEdit->text();
 }
 
 void AnalsisWidget::onBtnClicked(ulong hex)
 {
-    m_outputEdit->setText(QString("%1").arg(hex, HexMaxLength, Hex, QChar('0')).toUpper());
+    m_outputEdit->setText(
+        QString("%1").arg(hex, BitChange::hexMaxLength(), Hex, QChar('0')).toUpper());
 }
 
 void AnalsisWidget::onResetBtnClicked()
 {
     m_inputEdit->setText("");
-    m_outputEdit->setText("00000000");
+    if (BitChange::bit() == 32) {
+        m_outputEdit->setText(default32BitText);
+    } else {
+        m_outputEdit->setText(default64BitText);
+    }
 }
 
 void AnalsisWidget::onRestoreBtnClicked()
 {
     emit restoreBinary(m_inputEdit->text());
+}
+
+void AnalsisWidget::updateEdit(int bit)
+{
+    Q_UNUSED(bit);
+    m_inputEdit->setText("");
+    m_inputEdit->setMaxLength(BitChange::hexMaxLength());
+    m_inputEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
+    if (BitChange::bit() == 32) {
+        m_outputEdit->setText(default32BitText);
+    } else {
+        m_outputEdit->setText(default64BitText);
+    }
+    m_outputEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
+    emit restoreBinary(m_inputEdit->text());
+    m_selectedLabelWidget->onClearBtnClicked();
+    m_selectedBtnWidget->onClearBtnClicked();
 }
