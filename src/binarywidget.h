@@ -29,7 +29,6 @@ signals:
     void btnClicked(ulong hex);
     void checkLabelOutput(const ulong &dec);
     void checkBtnOutput(const ulong &dec);
-    void updateWidget();
 
 private:
     void initConnection();

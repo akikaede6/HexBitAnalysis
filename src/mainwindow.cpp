@@ -36,12 +36,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(addBtn, &QPushButton::clicked, this, &MainWindow::onAddBtnClicked);
     connect(deleteBtn, &QPushButton::clicked, this, &MainWindow::onDeleteBtnClicked);
     connect(this, &MainWindow::onBitChanged, analysisWidget, &AnalsisWidget::onBitChanged);
-    connect(analysisWidget, &AnalsisWidget::updateWidget, this, [&] {
-        QTimer::singleShot(0, this, [&] { adjustSize(); });
-    });
-
     createActions();
     createMenus();
+    this->setFixedSize(sizeHint());
 }
 
 void MainWindow::onAddBtnClicked()
@@ -50,6 +47,10 @@ void MainWindow::onAddBtnClicked()
     connect(this, &MainWindow::onFontSizeChanged, analysisWidget, &AnalsisWidget::onFontSizeChanged);
     connect(this, &MainWindow::onBitChanged, analysisWidget, &AnalsisWidget::onBitChanged);
     m_mainLayout->addWidget(analysisWidget);
+    QTimer::singleShot(0, this, [&] {
+        adjustSize();
+        this->setFixedSize(sizeHint());
+    });
 }
 
 void MainWindow::onDeleteBtnClicked()
@@ -60,7 +61,10 @@ void MainWindow::onDeleteBtnClicked()
         deletedWidget->deleteLater();
     }
 
-    QTimer::singleShot(0, this, [&] { adjustSize(); });
+    QTimer::singleShot(0, this, [&] {
+        adjustSize();
+        this->setFixedSize(sizeHint());
+    });
 }
 
 void MainWindow::onEditFontClicked()
@@ -70,7 +74,10 @@ void MainWindow::onEditFontClicked()
         this->setFont(FontSize::fontSize());
         m_fontAct->setFont(FontSize::fontSize());
         m_bitAct->setFont(FontSize::fontSize());
-        QTimer::singleShot(0, this, [&] { adjustSize(); });
+        QTimer::singleShot(0, this, [&] {
+            adjustSize();
+            this->setFixedSize(sizeHint());
+        });
     });
     connect(fontDialog, &FontDialog::fontChanged, this, &MainWindow::onFontSizeChanged);
     fontDialog->show();
@@ -80,8 +87,12 @@ void MainWindow::onEditBitClicked()
 {
     auto *bitDialog = new BitDialog(this);
     connect(bitDialog, &BitDialog::bitChanged, this, &MainWindow::onBitChanged);
+    // FIXME: time to resize is not property
     connect(bitDialog, &BitDialog::bitChanged, this, [&] {
-        QTimer::singleShot(0, this, [&] { adjustSize(); });
+        QTimer::singleShot(1, this, [&] {
+            adjustSize();
+            this->setFixedSize(sizeHint());
+        });
     });
     bitDialog->show();
 }
@@ -103,7 +114,7 @@ void MainWindow::createMenus()
 
 void MainWindow::createActions()
 {
-    m_fontAct = new QAction(tr("&Font"), this);
+    m_fontAct = new QAction(tr("&Font Size"), this);
     m_fontAct->setStatusTip(tr("edit font size"));
     connect(m_fontAct, &QAction::triggered, this, &MainWindow::onEditFontClicked);
 

@@ -21,7 +21,6 @@ signals:
     void restoreBinary(const QString &input);
     void onFontSizeChanged();
     void onBitChanged(int bit);
-    void updateWidget();
 
 public slots:
     void onInputChanged(const QString &input);

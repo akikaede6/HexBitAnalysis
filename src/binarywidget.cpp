@@ -71,7 +71,7 @@ void BinaryWidget::onCheckBoxClicked()
     for (int i = 0; i < BitChange::bit(); i++) {
         auto *checkedBox = m_checkBoxList.at(i);
         if (checkedBox->isChecked()) {
-            hexInput |= m_labelList.at(i)->text().toUInt(nullptr, 2) << from;
+            hexInput |= m_labelList.at(i)->text().toULong(nullptr, 2) << from;
             hexOutput |= m_binaryBtnGroup->button(i)->text().toULong(nullptr, 2) << from;
             from++;
         }
@@ -115,7 +115,6 @@ void BinaryWidget::onBitChanged(int bit)
     Q_UNUSED(bit);
     if (BitChange::bit() == Bit32) {
         hide64Bit();
-        emit updateWidget();
     } else {
         show64Bit();
     }

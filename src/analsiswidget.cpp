@@ -3,7 +3,6 @@
 #include "selectedwidget.h"
 #include "util.h"
 
-#include <iostream>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
@@ -58,39 +57,50 @@ void AnalsisWidget::initConnection()
     connect(m_inputEdit, &QLineEdit::textEdited, m_binaryWidget, &BinaryWidget::onInputChanged);
     connect(m_binaryWidget, &BinaryWidget::btnClicked, this, &AnalsisWidget::onBtnClicked);
     connect(m_binaryWidget,
+            &BinaryWidget::btnClicked,
+            m_binaryWidget,
+            &BinaryWidget::onCheckBoxClicked);
+
+    // init selected label connect
+    connect(m_binaryWidget,
             &BinaryWidget::checkLabelOutput,
             m_selectedLabelWidget,
             &SelectedWidget::onCheckBoxClicked);
+
+    // init selected btn connect
     connect(m_binaryWidget,
             &BinaryWidget::checkBtnOutput,
             m_selectedBtnWidget,
             &SelectedWidget::onCheckBoxClicked);
-    connect(m_binaryWidget,
-            &BinaryWidget::btnClicked,
-            m_binaryWidget,
-            &BinaryWidget::onCheckBoxClicked);
+
+    // init clear btn connect
     connect(m_clearBtn, &QPushButton::clicked, m_binaryWidget, &BinaryWidget::onClearBtnClicked);
-    connect(m_resetBtn, &QPushButton::clicked, m_binaryWidget, &BinaryWidget::onResetBtnClicked);
     connect(m_clearBtn,
-            &QPushButton::clicked,
-            m_selectedLabelWidget,
-            &SelectedWidget::onClearBtnClicked);
-    connect(m_resetBtn,
             &QPushButton::clicked,
             m_selectedLabelWidget,
             &SelectedWidget::onClearBtnClicked);
     connect(m_clearBtn,
             &QPushButton::clicked,
             m_selectedBtnWidget,
+            &SelectedWidget::onClearBtnClicked);
+
+    // init reset btn connect
+    connect(m_resetBtn, &QPushButton::clicked, m_binaryWidget, &BinaryWidget::onResetBtnClicked);
+    connect(m_resetBtn,
+            &QPushButton::clicked,
+            m_selectedLabelWidget,
             &SelectedWidget::onClearBtnClicked);
     connect(m_resetBtn,
             &QPushButton::clicked,
             m_selectedBtnWidget,
             &SelectedWidget::onClearBtnClicked);
     connect(m_resetBtn, &QPushButton::clicked, this, &AnalsisWidget::onResetBtnClicked);
+
     connect(m_restoreBtn, &QPushButton::clicked, this, &AnalsisWidget::onRestoreBtnClicked);
     connect(this, &AnalsisWidget::restoreBinary, m_binaryWidget, &BinaryWidget::onInputChanged);
     connect(this, &AnalsisWidget::restoreBinary, this, &AnalsisWidget::onInputChanged);
+
+    // init font size connect
     connect(this,
             &AnalsisWidget::onFontSizeChanged,
             m_binaryWidget,
@@ -103,12 +113,21 @@ void AnalsisWidget::initConnection()
             &AnalsisWidget::onFontSizeChanged,
             m_selectedLabelWidget,
             &SelectedWidget::onFontSizeChanged);
+    connect(this,
+            &AnalsisWidget::onFontSizeChanged,
+            m_selectedBtnWidget,
+            &SelectedWidget::onFontSizeChanged);
+
+    // init bit size connect
     connect(this, &AnalsisWidget::onBitChanged, m_binaryWidget, &BinaryWidget::onBitChanged);
     connect(this, &AnalsisWidget::onBitChanged, this, &AnalsisWidget::updateEdit);
-    connect(m_binaryWidget, &BinaryWidget::updateWidget, this, &AnalsisWidget::updateWidget);
     connect(this,
             &AnalsisWidget::onBitChanged,
             m_selectedLabelWidget,
+            &SelectedWidget::onFontSizeChanged);
+    connect(this,
+            &AnalsisWidget::onBitChanged,
+            m_selectedBtnWidget,
             &SelectedWidget::onFontSizeChanged);
 }
 
@@ -150,13 +169,14 @@ void AnalsisWidget::updateEdit(int bit)
     m_inputEdit->setText("");
     m_inputEdit->setMaxLength(BitChange::hexMaxLength());
     m_inputEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
+    m_outputEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
     if (BitChange::bit() == 32) {
         m_outputEdit->setText(default32BitText);
     } else {
         m_outputEdit->setText(default64BitText);
     }
-    m_outputEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
     emit restoreBinary(m_inputEdit->text());
     m_selectedLabelWidget->onClearBtnClicked();
     m_selectedBtnWidget->onClearBtnClicked();
+    m_binaryWidget->onResetBtnClicked();
 }
