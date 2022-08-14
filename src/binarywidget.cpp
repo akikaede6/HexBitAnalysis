@@ -7,6 +7,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QTimer>
 
 BinaryWidget::BinaryWidget(QWidget *parent)
     : QWidget{parent}
@@ -115,6 +116,7 @@ void BinaryWidget::onBitChanged(int bit)
     Q_UNUSED(bit);
     if (BitChange::bit() == Bit32) {
         hide64Bit();
+        QTimer::singleShot(0, this, [&] { this->adjustSize(); });
     } else {
         show64Bit();
     }
@@ -200,9 +202,11 @@ void BinaryWidget::init32Bit()
     }
     int i = 0;
     for (i = 0; i < binaryLayoutVec.length() - 1; i++) {
+        binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
         groupBoxLayoutUp->addLayout(binaryLayoutVec[i]);
         groupBoxLayoutUp->addWidget(line[i]);
     }
+    binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
     groupBoxLayoutUp->addLayout(binaryLayoutVec[i]);
 
     m_mouseMainLayout->insertLayout(1, groupBoxLayoutUp);
@@ -280,9 +284,11 @@ void BinaryWidget::init64Bit()
     }
     int i = 0;
     for (i = 0; i < binaryLayoutVec.length() - 1; i++) {
+        binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
         groupBoxLayoutDown->addLayout(binaryLayoutVec[i]);
         groupBoxLayoutDown->addWidget(line[i]);
     }
+    binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
     groupBoxLayoutDown->addLayout(binaryLayoutVec[i]);
 
     m_mouseMainLayout->insertLayout(0, groupBoxLayoutDown);
@@ -311,4 +317,5 @@ void BinaryWidget::show64Bit()
         m_binaryBtnGroup->button(i)->setVisible(true);
         m_checkBoxList.at(i)->setVisible(true);
     }
+    onFontSizeChanged();
 }

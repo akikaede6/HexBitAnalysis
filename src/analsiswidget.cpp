@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QTimer>
 #include <QVBoxLayout>
 
 AnalsisWidget::AnalsisWidget(QWidget *parent)
@@ -119,14 +120,13 @@ void AnalsisWidget::initConnection()
             &SelectedWidget::onFontSizeChanged);
 
     // init bit size connect
-    connect(this, &AnalsisWidget::onBitChanged, m_binaryWidget, &BinaryWidget::onBitChanged);
-    connect(this, &AnalsisWidget::onBitChanged, this, &AnalsisWidget::updateEdit);
+    connect(this, &AnalsisWidget::updateBit, this, &AnalsisWidget::updateEdit);
     connect(this,
-            &AnalsisWidget::onBitChanged,
+            &AnalsisWidget::updateBit,
             m_selectedLabelWidget,
             &SelectedWidget::onFontSizeChanged);
     connect(this,
-            &AnalsisWidget::onBitChanged,
+            &AnalsisWidget::updateBit,
             m_selectedBtnWidget,
             &SelectedWidget::onFontSizeChanged);
 }
@@ -179,4 +179,10 @@ void AnalsisWidget::updateEdit(int bit)
     m_selectedLabelWidget->onClearBtnClicked();
     m_selectedBtnWidget->onClearBtnClicked();
     m_binaryWidget->onResetBtnClicked();
+}
+
+void AnalsisWidget::onBitChanged(int bit)
+{
+    m_binaryWidget->onBitChanged(bit);
+    QTimer::singleShot(0, this, [&] { this->adjustSize(); });
 }

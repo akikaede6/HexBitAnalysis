@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     , m_mainLayout(new QGridLayout(m_mainWidget))
 {
     setFont(FontSize::fontSize());
-    auto *titleLayout = new QHBoxLayout();
+    auto *titleWidget = new QWidget(m_mainWidget);
+    auto *titleLayout = new QHBoxLayout(titleWidget);
     auto *titleLabel = new QLabel(tr("Hex Bit Analysis"), this);
     QFont font;
     font.setPixelSize(44);
@@ -27,13 +28,13 @@ MainWindow::MainWindow(QWidget *parent)
     auto *controlBtn = new ControlButton(this);
     titleLayout->addWidget(controlBtn, 0, Qt::AlignRight);
     titleLayout->addWidget(titleLabel, this->geometry().width() / 2, Qt::AlignCenter);
+    m_mainLayout->addWidget(titleWidget, 0, 0);
+    titleWidget->setFixedSize(titleWidget->sizeHint());
 
-    auto *analysisWidget = new AnalsisWidget(this);
+    auto *analysisWidget = new AnalsisWidget(m_mainWidget);
     connect(this, &MainWindow::onFontSizeChanged, analysisWidget, &AnalsisWidget::onFontSizeChanged);
-    m_mainLayout->addLayout(titleLayout, 0, 0);
     m_mainLayout->addWidget(analysisWidget, 1, 0);
 
-    setCentralWidget(m_mainWidget);
     connect(controlBtn, &ControlButton::belowAddBtnClicked, this, &MainWindow::onBelowAddBtnClicked);
     connect(controlBtn,
             &ControlButton::belowDeleteBtnClicked,
@@ -44,30 +45,40 @@ MainWindow::MainWindow(QWidget *parent)
             &ControlButton::rightDeleteBtnClicked,
             this,
             &MainWindow::onRightDeleteBtnClicked);
-    connect(this, &MainWindow::onBitChanged, analysisWidget, &AnalsisWidget::onBitChanged);
+    connect(this, &MainWindow::updateBit, this, [analysisWidget, this](int bit) {
+        analysisWidget->onBitChanged(bit);
+        onBitChanged(bit);
+    });
     createActions();
     createMenus();
-    this->setFixedSize(sizeHint());
+    setCentralWidget(m_mainWidget);
 }
 
 void MainWindow::onBelowAddBtnClicked()
 {
     auto *analysisWidget = new AnalsisWidget(this);
     connect(this, &MainWindow::onFontSizeChanged, analysisWidget, &AnalsisWidget::onFontSizeChanged);
-    connect(this, &MainWindow::onBitChanged, analysisWidget, &AnalsisWidget::onBitChanged);
+    connect(this, &MainWindow::updateBit, this, [analysisWidget, this](int bit) {
+        analysisWidget->onBitChanged(bit);
+        onBitChanged(bit);
+    });
     m_mainLayout->addWidget(analysisWidget, m_currentRow, 0);
     if (m_currentCol != 1) {
         for (int i = 1; i < m_currentCol; i++) {
             auto *analysisWidget = new AnalsisWidget(this);
             m_mainLayout->addWidget(analysisWidget, m_currentRow, i);
-            connect(this, &MainWindow::onBitChanged, analysisWidget, &AnalsisWidget::onBitChanged);
+            connect(this,
+                    &MainWindow::onFontSizeChanged,
+                    analysisWidget,
+                    &AnalsisWidget::onFontSizeChanged);
+            connect(this, &MainWindow::updateBit, this, [analysisWidget, this](int bit) {
+                analysisWidget->onBitChanged(bit);
+                onBitChanged(bit);
+            });
         }
     }
     m_currentRow++;
-    QTimer::singleShot(0, this, [&] {
-        adjustSize();
-        this->setFixedSize(sizeHint());
-    });
+    QTimer::singleShot(0, this, [&] { adjustSize(); });
 }
 
 void MainWindow::onBelowDeleteBtnClicked()
@@ -82,30 +93,34 @@ void MainWindow::onBelowDeleteBtnClicked()
             }
         }
     }
-    QTimer::singleShot(0, this, [&] {
-        adjustSize();
-        this->setFixedSize(sizeHint());
-    });
+    QTimer::singleShot(0, this, [&] { adjustSize(); });
 }
 
 void MainWindow::onRightAddBtnClicked()
 {
     auto *analysisWidget = new AnalsisWidget(this);
     connect(this, &MainWindow::onFontSizeChanged, analysisWidget, &AnalsisWidget::onFontSizeChanged);
-    connect(this, &MainWindow::onBitChanged, analysisWidget, &AnalsisWidget::onBitChanged);
+    connect(this, &MainWindow::updateBit, this, [analysisWidget, this](int bit) {
+        analysisWidget->onBitChanged(bit);
+        onBitChanged(bit);
+    });
     m_mainLayout->addWidget(analysisWidget, 1, m_currentCol);
     if (m_currentRow != 2) {
         for (int i = 2; i < m_currentRow; i++) {
             auto *analysisWidget = new AnalsisWidget(this);
             m_mainLayout->addWidget(analysisWidget, i, m_currentCol);
-            connect(this, &MainWindow::onBitChanged, analysisWidget, &AnalsisWidget::onBitChanged);
+            connect(this,
+                    &MainWindow::onFontSizeChanged,
+                    analysisWidget,
+                    &AnalsisWidget::onFontSizeChanged);
+            connect(this, &MainWindow::updateBit, this, [analysisWidget, this](int bit) {
+                analysisWidget->onBitChanged(bit);
+                onBitChanged(bit);
+            });
         }
     }
     m_currentCol++;
-    QTimer::singleShot(0, this, [&] {
-        adjustSize();
-        this->setFixedSize(sizeHint());
-    });
+    QTimer::singleShot(0, this, [&] { adjustSize(); });
 }
 
 void MainWindow::onRightDeleteBtnClicked()
@@ -120,11 +135,7 @@ void MainWindow::onRightDeleteBtnClicked()
             }
         }
     }
-
-    QTimer::singleShot(0, this, [&] {
-        adjustSize();
-        this->setFixedSize(sizeHint());
-    });
+    QTimer::singleShot(0, this, [&] { adjustSize(); });
 }
 
 void MainWindow::onEditFontClicked()
@@ -134,10 +145,7 @@ void MainWindow::onEditFontClicked()
         this->setFont(FontSize::fontSize());
         m_fontAct->setFont(FontSize::fontSize());
         m_bitAct->setFont(FontSize::fontSize());
-        QTimer::singleShot(0, this, [&] {
-            adjustSize();
-            this->setFixedSize(sizeHint());
-        });
+        QTimer::singleShot(0, this, [&] { adjustSize(); });
     });
     connect(fontDialog, &FontDialog::fontChanged, this, &MainWindow::onFontSizeChanged);
     fontDialog->show();
@@ -146,15 +154,17 @@ void MainWindow::onEditFontClicked()
 void MainWindow::onEditBitClicked()
 {
     auto *bitDialog = new BitDialog(this);
-    connect(bitDialog, &BitDialog::bitChanged, this, &MainWindow::onBitChanged);
-    // FIXME: time to resize is not property
-    connect(bitDialog, &BitDialog::bitChanged, this, [&] {
-        QTimer::singleShot(1, this, [&] {
-            adjustSize();
-            this->setFixedSize(sizeHint());
-        });
-    });
+    bitDialog->setFont(FontSize::fontSize());
+    connect(bitDialog, &BitDialog::bitChanged, this, &MainWindow::updateBit);
     bitDialog->show();
+}
+
+void MainWindow::onBitChanged(int bit)
+{
+    Q_UNUSED(bit);
+    this->centralWidget()->layout()->update();
+    this->centralWidget()->layout()->activate();
+    QTimer::singleShot(0, this, [&] { this->adjustSize(); });
 }
 
 void MainWindow::setBtnIcon(const QString &path, QPushButton *button)

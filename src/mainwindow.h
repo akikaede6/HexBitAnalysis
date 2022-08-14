@@ -14,7 +14,7 @@ public:
 
 signals:
     void onFontSizeChanged();
-    void onBitChanged(int bit);
+    void updateBit(int bit);
 
 public slots:
     void onBelowAddBtnClicked();
@@ -23,6 +23,7 @@ public slots:
     void onRightDeleteBtnClicked();
     void onEditFontClicked();
     void onEditBitClicked();
+    void onBitChanged(int bit);
 
 private:
     static void setBtnIcon(const QString &path, QPushButton *button);

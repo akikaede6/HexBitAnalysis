@@ -20,7 +20,7 @@ private:
 signals:
     void restoreBinary(const QString &input);
     void onFontSizeChanged();
-    void onBitChanged(int bit);
+    void updateBit(int bit);
 
 public slots:
     void onInputChanged(const QString &input);
@@ -28,6 +28,7 @@ public slots:
     void onResetBtnClicked();
     void onRestoreBtnClicked();
     void updateEdit(int bit);
+    void onBitChanged(int bit);
 
 private:
     QLineEdit *m_inputEdit;

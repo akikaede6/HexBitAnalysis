@@ -35,11 +35,11 @@ BitDialog::BitDialog(QWidget *parent)
 void BitDialog::onConfirmBtnClicked()
 {
     if (m_btnGroup->checkedId() == 0) {
-        BitChange::setBit(32);
-        emit bitChanged(32);
+        BitChange::setBit(Bit32);
+        emit bitChanged(Bit32);
     } else {
-        BitChange::setBit(64);
-        emit bitChanged(32);
+        BitChange::setBit(Bit64);
+        emit bitChanged(Bit64);
     }
     this->close();
     this->deleteLater();
