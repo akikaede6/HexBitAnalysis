@@ -105,8 +105,8 @@ void BinaryWidget::onFontSizeChanged()
         m_numLabelList.at(i)->setFont(FontSize::fontSize());
         m_labelList.at(i)->setFont(FontSize::fontSize());
         m_binaryBtnGroup->button(i)->setFont(FontSize::fontSize());
-        m_binaryBtnGroup->button(i)->setMaximumWidth(FontSize::fontPixel());
-        m_labelList.at(i)->setMinimumWidth(m_binaryBtnGroup->button(i)->width());
+        m_binaryBtnGroup->button(i)->setFixedWidth(FontSize::fontPixel());
+        m_labelList.at(i)->setFixedWidth(m_binaryBtnGroup->button(i)->width());
     }
 }
 
@@ -168,8 +168,8 @@ void BinaryWidget::init32Bit()
 
         auto *checkBox = new QCheckBox(this);
         m_checkBoxList.append(checkBox);
-        binaryBtn->setMaximumWidth(FontSize::fontPixel());
-        binaryLabel->setMinimumWidth(binaryBtn->width());
+        binaryBtn->setFixedWidth(FontSize::fontPixel());
+        binaryLabel->setFixedWidth(binaryBtn->width());
 
         binaryNumLabel->setFont(FontSize::fontSize());
         binaryLabel->setFont(FontSize::fontSize());
@@ -247,8 +247,8 @@ void BinaryWidget::init64Bit()
 
         auto *checkBox = new QCheckBox(this);
         m_checkBoxList.append(checkBox);
-        binaryBtn->setMaximumWidth(FontSize::fontPixel());
-        binaryLabel->setMinimumWidth(binaryBtn->width());
+        binaryBtn->setFixedWidth(FontSize::fontPixel());
+        binaryLabel->setFixedWidth(binaryBtn->width());
 
         binaryNumLabel->setFont(FontSize::fontSize());
         binaryLabel->setFont(FontSize::fontSize());
