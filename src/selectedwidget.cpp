@@ -18,6 +18,7 @@ SelectedWidget::SelectedWidget(QWidget *parent)
     m_decDisEdit->setFixedWidth(fm.boundingRect(QString(MaxDecWidth)).width() + 6);
     m_hexDisEdit->setReadOnly(true);
     m_decDisEdit->setReadOnly(true);
+    mainLayout->setSpacing(10);
     mainLayout->addWidget(hexLabel, 0, Qt::AlignCenter);
     mainLayout->addWidget(m_hexDisEdit, 0, Qt::AlignCenter);
     mainLayout->addWidget(decLabel, 0, Qt::AlignCenter);
