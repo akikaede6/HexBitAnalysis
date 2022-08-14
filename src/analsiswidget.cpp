@@ -133,7 +133,7 @@ void AnalsisWidget::initConnection()
 
 void AnalsisWidget::onInputChanged(const QString &input)
 {
-    ulong hex = input.toULong(nullptr, Hex);
+    quint64 hex = input.toULongLong(nullptr, Hex);
     int pos = m_inputEdit->cursorPosition();
     m_inputEdit->setText(input.toUpper());
     m_inputEdit->setCursorPosition(pos);
@@ -142,7 +142,7 @@ void AnalsisWidget::onInputChanged(const QString &input)
     m_outputEdit->text();
 }
 
-void AnalsisWidget::onBtnClicked(ulong hex)
+void AnalsisWidget::onBtnClicked(quint64 hex)
 {
     m_outputEdit->setText(
         QString("%1").arg(hex, BitChange::hexMaxLength(), Hex, QChar('0')).toUpper());

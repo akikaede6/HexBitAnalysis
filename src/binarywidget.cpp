@@ -23,7 +23,7 @@ BinaryWidget::BinaryWidget(QWidget *parent)
 
 void BinaryWidget::onInputChanged(const QString &input)
 {
-    quint64 hex = input.toULong(nullptr, Hex);
+    quint64 hex = input.toULongLong(nullptr, Hex);
     for (int i = 0; i < BitChange::bit(); i++) {
         quint64 shiftValue = 1LL << i;
         if ((shiftValue & hex) != 0U) {
@@ -56,23 +56,23 @@ void BinaryWidget::onBtnClicked(QAbstractButton *clickedBtn)
     } else {
         clickedBtn->setStyleSheet(QString::fromUtf8("QPushButton{background-color:#FFD700;}"));
     }
-    ulong hex = 0;
+    quint64 hex = 0;
     for (int i = 0; i < BitChange::bit(); i++) {
-        hex |= (m_binaryBtnGroup->button(i)->text().toULong(nullptr, 2)) << i;
+        hex |= (m_binaryBtnGroup->button(i)->text().toULongLong(nullptr, 2)) << i;
     }
     emit btnClicked(hex);
 }
 
 void BinaryWidget::onCheckBoxClicked()
 {
-    ulong from = 0;
-    ulong hexInput = 0;
-    ulong hexOutput = 0;
+    quint64 from = 0;
+    quint64 hexInput = 0;
+    quint64 hexOutput = 0;
     for (int i = 0; i < BitChange::bit(); i++) {
         auto *checkedBox = m_checkBoxList.at(i);
         if (checkedBox->isChecked()) {
-            hexInput |= m_labelList.at(i)->text().toULong(nullptr, 2) << from;
-            hexOutput |= m_binaryBtnGroup->button(i)->text().toULong(nullptr, 2) << from;
+            hexInput |= m_labelList.at(i)->text().toULongLong(nullptr, 2) << from;
+            hexOutput |= m_binaryBtnGroup->button(i)->text().toULongLong(nullptr, 2) << from;
             from++;
         }
     }

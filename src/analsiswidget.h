@@ -24,7 +24,7 @@ signals:
 
 public slots:
     void onInputChanged(const QString &input);
-    void onBtnClicked(ulong hex);
+    void onBtnClicked(quint64 hex);
     void onResetBtnClicked();
     void onRestoreBtnClicked();
     void updateEdit(int bit);

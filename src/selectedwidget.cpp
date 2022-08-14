@@ -25,7 +25,7 @@ SelectedWidget::SelectedWidget(QWidget *parent)
     mainLayout->addWidget(m_decDisEdit, 0, Qt::AlignCenter);
 }
 
-void SelectedWidget::onCheckBoxClicked(const ulong &dec)
+void SelectedWidget::onCheckBoxClicked(const quint64 &dec)
 {
     m_hexDisEdit->setText(QString("0x") + QString("%1").arg(dec, 0, Hex).toUpper());
     m_decDisEdit->setText(QString("%1").arg(dec));

@@ -11,7 +11,7 @@ public:
     explicit SelectedWidget(QWidget *parent = nullptr);
 
 public slots:
-    void onCheckBoxClicked(const ulong &dec);
+    void onCheckBoxClicked(const quint64 &dec);
     void onClearBtnClicked();
     void onFontSizeChanged();
 
