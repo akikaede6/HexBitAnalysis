@@ -20,15 +20,15 @@ private:
 signals:
     void restoreBinary(const QString &input);
     void onFontSizeChanged();
-    void onBitChanged(int bit);
-    void updateWidget();
+    void updateBit(int bit);
 
 public slots:
     void onInputChanged(const QString &input);
-    void onBtnClicked(ulong hex);
+    void onBtnClicked(quint64 hex);
     void onResetBtnClicked();
     void onRestoreBtnClicked();
     void updateEdit(int bit);
+    void onBitChanged(int bit);
 
 private:
     QLineEdit *m_inputEdit;

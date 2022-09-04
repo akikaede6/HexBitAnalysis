@@ -26,10 +26,9 @@ public slots:
     void onBitChanged(int bit);
 
 signals:
-    void btnClicked(ulong hex);
-    void checkLabelOutput(const ulong &dec);
-    void checkBtnOutput(const ulong &dec);
-    void updateWidget();
+    void btnClicked(quint64 hex);
+    void checkLabelOutput(const quint64 &dec);
+    void checkBtnOutput(const quint64 &dec);
 
 private:
     void initConnection();

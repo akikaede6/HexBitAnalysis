@@ -1,7 +1,5 @@
 #include "util.h"
 
-#include <iostream>
-
 QFont FontSize::fontSize()
 {
     QFont font;

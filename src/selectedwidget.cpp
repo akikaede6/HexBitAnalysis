@@ -13,17 +13,19 @@ SelectedWidget::SelectedWidget(QWidget *parent)
     auto *mainLayout = new QHBoxLayout(this);
     auto *hexLabel = new QLabel("HEX", this);
     auto *decLabel = new QLabel("DEC", this);
-    m_hexDisEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
-    m_decDisEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
+    QFontMetrics fm = m_hexDisEdit->fontMetrics();
+    m_hexDisEdit->setFixedWidth(fm.boundingRect(QString(MaxHexWidth)).width() + 6);
+    m_decDisEdit->setFixedWidth(fm.boundingRect(QString(MaxDecWidth)).width() + 6);
     m_hexDisEdit->setReadOnly(true);
     m_decDisEdit->setReadOnly(true);
+    mainLayout->setSpacing(10);
     mainLayout->addWidget(hexLabel, 0, Qt::AlignCenter);
     mainLayout->addWidget(m_hexDisEdit, 0, Qt::AlignCenter);
     mainLayout->addWidget(decLabel, 0, Qt::AlignCenter);
     mainLayout->addWidget(m_decDisEdit, 0, Qt::AlignCenter);
 }
 
-void SelectedWidget::onCheckBoxClicked(const ulong &dec)
+void SelectedWidget::onCheckBoxClicked(const quint64 &dec)
 {
     m_hexDisEdit->setText(QString("0x") + QString("%1").arg(dec, 0, Hex).toUpper());
     m_decDisEdit->setText(QString("%1").arg(dec));
@@ -37,6 +39,8 @@ void SelectedWidget::onClearBtnClicked()
 
 void SelectedWidget::onFontSizeChanged()
 {
-    m_hexDisEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
-    m_decDisEdit->setMaximumWidth(BitChange::hexMaxLength() * FontSize::fontPixel());
+    // FIXME: hard coded width
+    QFontMetrics fm = m_hexDisEdit->fontMetrics();
+    m_hexDisEdit->setFixedWidth(fm.boundingRect(QString(MaxHexWidth)).width() + 6);
+    m_decDisEdit->setFixedWidth(fm.boundingRect(QString(MaxDecWidth)).width() + 6);
 }

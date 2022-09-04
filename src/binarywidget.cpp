@@ -7,6 +7,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QTimer>
 
 BinaryWidget::BinaryWidget(QWidget *parent)
     : QWidget{parent}
@@ -23,7 +24,7 @@ BinaryWidget::BinaryWidget(QWidget *parent)
 
 void BinaryWidget::onInputChanged(const QString &input)
 {
-    quint64 hex = input.toULong(nullptr, Hex);
+    quint64 hex = input.toULongLong(nullptr, Hex);
     for (int i = 0; i < BitChange::bit(); i++) {
         quint64 shiftValue = 1LL << i;
         if ((shiftValue & hex) != 0U) {
@@ -56,23 +57,23 @@ void BinaryWidget::onBtnClicked(QAbstractButton *clickedBtn)
     } else {
         clickedBtn->setStyleSheet(QString::fromUtf8("QPushButton{background-color:#FFD700;}"));
     }
-    ulong hex = 0;
+    quint64 hex = 0;
     for (int i = 0; i < BitChange::bit(); i++) {
-        hex |= (m_binaryBtnGroup->button(i)->text().toULong(nullptr, 2)) << i;
+        hex |= (m_binaryBtnGroup->button(i)->text().toULongLong(nullptr, 2)) << i;
     }
     emit btnClicked(hex);
 }
 
 void BinaryWidget::onCheckBoxClicked()
 {
-    ulong from = 0;
-    ulong hexInput = 0;
-    ulong hexOutput = 0;
+    quint64 from = 0;
+    quint64 hexInput = 0;
+    quint64 hexOutput = 0;
     for (int i = 0; i < BitChange::bit(); i++) {
         auto *checkedBox = m_checkBoxList.at(i);
         if (checkedBox->isChecked()) {
-            hexInput |= m_labelList.at(i)->text().toUInt(nullptr, 2) << from;
-            hexOutput |= m_binaryBtnGroup->button(i)->text().toULong(nullptr, 2) << from;
+            hexInput |= m_labelList.at(i)->text().toULongLong(nullptr, 2) << from;
+            hexOutput |= m_binaryBtnGroup->button(i)->text().toULongLong(nullptr, 2) << from;
             from++;
         }
     }
@@ -105,8 +106,8 @@ void BinaryWidget::onFontSizeChanged()
         m_numLabelList.at(i)->setFont(FontSize::fontSize());
         m_labelList.at(i)->setFont(FontSize::fontSize());
         m_binaryBtnGroup->button(i)->setFont(FontSize::fontSize());
-        m_binaryBtnGroup->button(i)->setMaximumWidth(FontSize::fontPixel());
-        m_labelList.at(i)->setMinimumWidth(m_binaryBtnGroup->button(i)->width());
+        m_binaryBtnGroup->button(i)->setFixedWidth(FontSize::fontPixel());
+        m_labelList.at(i)->setFixedWidth(m_binaryBtnGroup->button(i)->width());
     }
 }
 
@@ -115,7 +116,7 @@ void BinaryWidget::onBitChanged(int bit)
     Q_UNUSED(bit);
     if (BitChange::bit() == Bit32) {
         hide64Bit();
-        emit updateWidget();
+        QTimer::singleShot(0, this, [&] { this->adjustSize(); });
     } else {
         show64Bit();
     }
@@ -169,8 +170,8 @@ void BinaryWidget::init32Bit()
 
         auto *checkBox = new QCheckBox(this);
         m_checkBoxList.append(checkBox);
-        binaryBtn->setMaximumWidth(FontSize::fontPixel());
-        binaryLabel->setMinimumWidth(binaryBtn->width());
+        binaryBtn->setFixedWidth(FontSize::fontPixel());
+        binaryLabel->setFixedWidth(binaryBtn->width());
 
         binaryNumLabel->setFont(FontSize::fontSize());
         binaryLabel->setFont(FontSize::fontSize());
@@ -201,9 +202,11 @@ void BinaryWidget::init32Bit()
     }
     int i = 0;
     for (i = 0; i < binaryLayoutVec.length() - 1; i++) {
+        binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
         groupBoxLayoutUp->addLayout(binaryLayoutVec[i]);
         groupBoxLayoutUp->addWidget(line[i]);
     }
+    binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
     groupBoxLayoutUp->addLayout(binaryLayoutVec[i]);
 
     m_mouseMainLayout->insertLayout(1, groupBoxLayoutUp);
@@ -248,8 +251,8 @@ void BinaryWidget::init64Bit()
 
         auto *checkBox = new QCheckBox(this);
         m_checkBoxList.append(checkBox);
-        binaryBtn->setMaximumWidth(FontSize::fontPixel());
-        binaryLabel->setMinimumWidth(binaryBtn->width());
+        binaryBtn->setFixedWidth(FontSize::fontPixel());
+        binaryLabel->setFixedWidth(binaryBtn->width());
 
         binaryNumLabel->setFont(FontSize::fontSize());
         binaryLabel->setFont(FontSize::fontSize());
@@ -281,9 +284,11 @@ void BinaryWidget::init64Bit()
     }
     int i = 0;
     for (i = 0; i < binaryLayoutVec.length() - 1; i++) {
+        binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
         groupBoxLayoutDown->addLayout(binaryLayoutVec[i]);
         groupBoxLayoutDown->addWidget(line[i]);
     }
+    binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
     groupBoxLayoutDown->addLayout(binaryLayoutVec[i]);
 
     m_mouseMainLayout->insertLayout(0, groupBoxLayoutDown);
@@ -312,4 +317,5 @@ void BinaryWidget::show64Bit()
         m_binaryBtnGroup->button(i)->setVisible(true);
         m_checkBoxList.at(i)->setVisible(true);
     }
+    onFontSizeChanged();
 }

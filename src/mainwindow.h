@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QWidget>
 
-class QVBoxLayout;
+class QGridLayout;
 class QPushButton;
 class MainWindow : public QMainWindow
 {
@@ -14,13 +14,16 @@ public:
 
 signals:
     void onFontSizeChanged();
-    void onBitChanged(int bit);
+    void updateBit(int bit);
 
 public slots:
-    void onAddBtnClicked();
-    void onDeleteBtnClicked();
+    void onBelowAddBtnClicked();
+    void onBelowDeleteBtnClicked();
+    void onRightAddBtnClicked();
+    void onRightDeleteBtnClicked();
     void onEditFontClicked();
     void onEditBitClicked();
+    void onBitChanged(int bit);
 
 private:
     static void setBtnIcon(const QString &path, QPushButton *button);
@@ -29,9 +32,11 @@ private:
 
 private:
     QWidget *m_mainWidget;
-    QVBoxLayout *m_mainLayout;
+    QGridLayout *m_mainLayout;
     QMenu *m_editMenu{};
     QAction *m_fontAct{};
     QAction *m_bitAct{};
+    int m_currentRow = 2;
+    int m_currentCol = 1;
 };
 #endif // MAINWINDOW_H

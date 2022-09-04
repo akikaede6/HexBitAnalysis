@@ -1,5 +1,5 @@
 project(HexBitAnalysis)
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.21)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 set(CMAKE_AUTOMOC ON)
@@ -12,9 +12,11 @@ set(SOURCES
   src/widget/fontdialog.cpp
   src/mainwindow.cpp
   src/widget/mousegroupbox.cpp
-  src/widget/bitdialog.cpp
+
+  src/widget/controlbutton.cpp
   src/selectedwidget.cpp
   src/util.cpp
+  src/widget/bitdialog.cpp
   icon/image.qrc
   icon/appicon.rc
   HexBitAnalysis.desktop
@@ -28,6 +30,7 @@ set(HEADER_FILES
   src/selectedwidget.h
   src/util.h
   src/widget/bitdialog.h
+  src/widget/controlbutton.h
   )
 add_executable(HexBitAnalysis ${SOURCES})
 target_link_libraries(HexBitAnalysis PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
