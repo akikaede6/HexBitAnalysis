@@ -183,6 +183,8 @@ void AnalsisWidget::updateEdit(int bit)
 
 void AnalsisWidget::onBitChanged(int bit)
 {
+    m_inputEdit->setText("");
+    m_inputEdit->setMaxLength(BitChange::hexMaxLength());
     m_binaryWidget->onBitChanged(bit);
     QTimer::singleShot(0, this, [&] { this->adjustSize(); });
 }
