@@ -1,0 +1,27 @@
+name: MSYS2
+on: [push, pull_request, release]
+
+jobs:
+  msys2-mingw64:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: git mingw-w64-x86_64-gcc mingw-w64-x86_64-qt5-static mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake tree
+      - name: CI-Build
+        run: |
+          echo 'Running in MSYS2!'
+          cmake -H. -Bbuild -DCMAKE_PREFIX_PATH="/mingw64/qt5-static"
+          cmake --build build
+          tree
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: HexBitAnalysis-${{github.ref_name}}-${{ github.sha}}.exe
+          path: ./build/HexBitAnalysis.exe
