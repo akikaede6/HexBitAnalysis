@@ -1,46 +1,33 @@
 #include "controlbutton.h"
 
-#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QIcon>
+#include <QPixmap>
 #include <QPushButton>
 
 ControlButton::ControlButton(QWidget *parent)
     : QWidget{parent}
 {
-    auto *mainLayout = new QGridLayout(this);
-    auto *leftAdd = new QPushButton(this);
-    auto *belowAdd = new QPushButton(this);
-    auto *leftDelete = new QPushButton(this);
-    auto *belowDelete = new QPushButton(this);
-    setBtnIcon(":/icon/plus.png", leftAdd);
-    setBtnIcon(":/icon/plus.png", belowAdd);
-    setBtnIcon(":/icon/minus.png", leftDelete);
-    setBtnIcon(":/icon/minus.png", belowDelete);
-    mainLayout->addWidget(leftAdd, 1, 2);
-    mainLayout->addWidget(belowAdd, 2, 1);
-    mainLayout->addWidget(leftDelete, 1, 0);
-    mainLayout->addWidget(belowDelete, 0, 1);
+    auto *mainLayout = new QHBoxLayout(this);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setSpacing(6);
 
-    leftAdd->setIconSize(QSize(30, 30));
-    belowAdd->setIconSize(QSize(30, 30));
-    leftDelete->setIconSize(QSize(30, 30));
-    belowDelete->setIconSize(QSize(30, 30));
+    auto *addBtn = new QPushButton(this);
+    auto *deleteBtn = new QPushButton(this);
+    setBtnIcon(":/icon/plus.png", addBtn);
+    setBtnIcon(":/icon/minus.png", deleteBtn);
 
-    //    leftAdd->setFixedSize(30, 30);
-    //    belowAdd->setFixedSize(30, 30);
-    //    leftDelete->setFixedSize(30, 30);
-    //    belowDelete->setFixedSize(30, 30);
+    addBtn->setIconSize(QSize(24, 24));
+    deleteBtn->setIconSize(QSize(24, 24));
 
-    leftAdd->setStyleSheet("QPushButton{border: none;}");
-    belowAdd->setStyleSheet("QPushButton{border: none;}");
-    leftDelete->setStyleSheet("QPushButton{border: none;}");
-    belowDelete->setStyleSheet("QPushButton{border: none;}");
+    addBtn->setStyleSheet("QPushButton{border: none;}");
+    deleteBtn->setStyleSheet("QPushButton{border: none;}");
 
-    connect(leftAdd, &QPushButton::clicked, this, &ControlButton::rightAddBtnClicked);
-    connect(leftDelete, &QPushButton::clicked, this, &ControlButton::rightDeleteBtnClicked);
-    connect(belowAdd, &QPushButton::clicked, this, &ControlButton::belowAddBtnClicked);
-    connect(belowDelete, &QPushButton::clicked, this, &ControlButton::belowDeleteBtnClicked);
+    mainLayout->addWidget(addBtn);
+    mainLayout->addWidget(deleteBtn);
 
-    setFixedHeight(150);
+    connect(addBtn, &QPushButton::clicked, this, &ControlButton::addBtnClicked);
+    connect(deleteBtn, &QPushButton::clicked, this, &ControlButton::deleteBtnClicked);
 }
 void ControlButton::setBtnIcon(const QString &path, QPushButton *button)
 {

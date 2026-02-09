@@ -9,7 +9,7 @@ set(SOURCES
   src/main.cpp
   src/analsiswidget.cpp
   src/binarywidget.cpp
-  src/widget/fontdialog.cpp
+
   src/mainwindow.cpp
   src/widget/mousegroupbox.cpp
 
@@ -24,7 +24,6 @@ set(SOURCES
 set(HEADER_FILES
   src/analsiswidget.h
   src/binarywidget.h
-  src/widget/fontdialog.h
   src/mainwindow.h
   src/widget/mousegroupbox.h
   src/selectedwidget.h

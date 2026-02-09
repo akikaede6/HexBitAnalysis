@@ -22,7 +22,6 @@ public slots:
     void onCheckBoxClicked();
     void onClearBtnClicked();
     void onResetBtnClicked();
-    void onFontSizeChanged();
     void onBitChanged(int bit);
 
 signals:

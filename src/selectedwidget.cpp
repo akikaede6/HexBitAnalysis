@@ -36,11 +36,3 @@ void SelectedWidget::onClearBtnClicked()
     m_hexDisEdit->setText("0x0");
     m_decDisEdit->setText("0");
 }
-
-void SelectedWidget::onFontSizeChanged()
-{
-    // FIXME: hard coded width
-    QFontMetrics fm = m_hexDisEdit->fontMetrics();
-    m_hexDisEdit->setFixedWidth(fm.boundingRect(QString(MaxHexWidth)).width() + 6);
-    m_decDisEdit->setFixedWidth(fm.boundingRect(QString(MaxDecWidth)).width() + 6);
-}

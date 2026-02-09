@@ -8,24 +8,10 @@ const int Bit64 = 64;
 const int Bit32 = 32;
 const int BitGroupLength = 8;
 const int Hex = 16;
-const int defaultFont = 18;
 const QString default32BitText = "00000000";
 const QString default64BitText = "0000000000000000";
 const QString MaxHexWidth = "0x0000000000000000";
 const QString MaxDecWidth = "18446744073709551615";
-
-class FontSize
-{
-public:
-    static QFont fontSize();
-    static int fontPixel();
-    static void setFontSize(int size);
-
-private:
-    static int m_fontSize;
-};
-inline int FontSize::m_fontSize = defaultFont;
-
 
 class BitChange {
 public:

@@ -13,7 +13,6 @@ public:
 public slots:
     void onCheckBoxClicked(const quint64 &dec);
     void onClearBtnClicked();
-    void onFontSizeChanged();
 
 private:
     QLineEdit *m_hexDisEdit;

@@ -19,7 +19,6 @@ private:
 
 signals:
     void restoreBinary(const QString &input);
-    void onFontSizeChanged();
     void updateBit(int bit);
 
 public slots:

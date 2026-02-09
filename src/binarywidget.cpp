@@ -100,17 +100,6 @@ void BinaryWidget::onResetBtnClicked()
     }
 }
 
-void BinaryWidget::onFontSizeChanged()
-{
-    for (int i = 0; i < Bit64; i++) {
-        m_numLabelList.at(i)->setFont(FontSize::fontSize());
-        m_labelList.at(i)->setFont(FontSize::fontSize());
-        m_binaryBtnGroup->button(i)->setFont(FontSize::fontSize());
-        m_binaryBtnGroup->button(i)->setFixedWidth(FontSize::fontPixel());
-        m_labelList.at(i)->setFixedWidth(m_binaryBtnGroup->button(i)->width());
-    }
-}
-
 void BinaryWidget::onBitChanged(int bit)
 {
     Q_UNUSED(bit);
@@ -140,76 +129,44 @@ QFrame *BinaryWidget::createLine()
 void BinaryWidget::init32Bit()
 {
     auto *mainLayout = new QHBoxLayout(this);
-    auto *groupBoxLayoutUp = new QHBoxLayout();
-    QVector<QGridLayout *> binaryLayoutVec;
-    for (int i = 0; i < Bit32 / BitGroupLength; i++) {
-        binaryLayoutVec.push_back(new QGridLayout());
-    }
-
-    QVector<QFrame *> line;
-    for (int i = 0; i < binaryLayoutVec.length() - 1; i++) {
-        line.push_back(createLine());
-    }
+    // auto *groupBoxLayoutUp = new QHBoxLayout();
+    QGridLayout *bitLayout = new QGridLayout(this);
 
     for (int i = Bit32 - 1; i >= 0; i--) {
+        const int column = i + (i / BitGroupLength);
         auto *binaryNumLabel = new QLabel(QString::number(Bit32 - i - 1), this);
+        binaryNumLabel->setFixedSize(14, 24);
         if (i % BitGroupLength == 0)
             binaryNumLabel->setStyleSheet("QLabel{font-weight:bold;color:#9933FA;}");
         else
             binaryNumLabel->setStyleSheet("QLabel{font-weight:bold;color:#FF7F50;}");
         m_numLabelList.append(binaryNumLabel);
+        bitLayout->addWidget(binaryNumLabel, 0, column);
 
         auto *binaryLabel = new QLabel(QString::number(0), this);
+        binaryLabel->setFixedSize(14, 24);
         binaryLabel->setStyleSheet(QString::fromUtf8("QLabel{background-color:#B0E0E6;}"));
         binaryLabel->setAlignment(Qt::AlignCenter);
         m_labelList.append(binaryLabel);
+        bitLayout->addWidget(binaryLabel, 1, column);
 
         auto *binaryBtn = new QPushButton(QString::number(0), this);
+        binaryBtn->setFixedSize(14, 24);
         binaryBtn->setStyleSheet(QString::fromUtf8("QPushButton{background-color:#B0E0E6;}"));
         m_binaryBtnGroup->addButton(binaryBtn, Bit32 - i - 1);
+        bitLayout->addWidget(binaryBtn, 2, column);
 
         auto *checkBox = new QCheckBox(this);
         m_checkBoxList.append(checkBox);
-        binaryBtn->setFixedWidth(FontSize::fontPixel());
         binaryLabel->setFixedWidth(binaryBtn->width());
-
-        binaryNumLabel->setFont(FontSize::fontSize());
-        binaryLabel->setFont(FontSize::fontSize());
-        binaryBtn->setFont(FontSize::fontSize());
-
-        QGridLayout *binaryLayout = nullptr;
-        switch (i / BitGroupLength) {
-        case 0:
-            binaryLayout = binaryLayoutVec[0];
-            break;
-        case 1:
-            binaryLayout = binaryLayoutVec[1];
-            break;
-        case 2:
-            binaryLayout = binaryLayoutVec[2];
-            break;
-        case 3:
-            binaryLayout = binaryLayoutVec[3];
-            break;
-        default:
-            break;
-        }
-        binaryLayout->addWidget(binaryNumLabel, 0, i, Qt::AlignCenter);
-        binaryLayout->addWidget(binaryLabel, 1, i, Qt::AlignCenter);
-        binaryLayout->addWidget(binaryBtn, 2, i, Qt::AlignCenter);
-        binaryLayout->addWidget(checkBox, 3, i, Qt::AlignCenter);
-        binaryLayout->setSpacing(binaryBtn->width() / 5);
+        bitLayout->addWidget(checkBox, 3, column);
     }
-    int i = 0;
-    for (i = 0; i < binaryLayoutVec.length() - 1; i++) {
-        binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
-        groupBoxLayoutUp->addLayout(binaryLayoutVec[i]);
-        groupBoxLayoutUp->addWidget(line[i]);
+    for (int group = 1; group < Bit32 / BitGroupLength; group++) {
+        const int lineColumn = group * BitGroupLength + (group - 1);
+        bitLayout->addWidget(createLine(), 0, lineColumn, 4, 1);
     }
-    binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
-    groupBoxLayoutUp->addLayout(binaryLayoutVec[i]);
-
-    m_mouseMainLayout->insertLayout(1, groupBoxLayoutUp);
+    bitLayout->setRowStretch(4, 1);
+    m_mouseMainLayout->insertLayout(1, bitLayout);
 
     mainLayout->addWidget(m_mouseGroupBox);
     m_mouseGroupBox->addBtnList(m_binaryBtnGroup);
@@ -221,18 +178,11 @@ void BinaryWidget::init32Bit()
 
 void BinaryWidget::init64Bit()
 {
-    auto *groupBoxLayoutDown = new QHBoxLayout();
-    QVector<QGridLayout *> binaryLayoutVec;
-    for (int i = Bit32 / BitGroupLength; i < Bit64 / BitGroupLength; i++) {
-        binaryLayoutVec.push_back(new QGridLayout());
-    }
-
-    QVector<QFrame *> line;
-    for (int i = 0; i < binaryLayoutVec.length() - 1; i++) {
-        line.push_back(createLine());
-    }
+    auto *bitLayout = new QGridLayout();
 
     for (int i = Bit64 - 1; i >= Bit32; i--) {
+        const int localIndex = i - Bit32;
+        const int column = localIndex + (localIndex / BitGroupLength);
         auto *binaryNumLabel = new QLabel(QString::number(Bit32 - i + Bit64 - 1), this);
         if (i % BitGroupLength == 0)
             binaryNumLabel->setStyleSheet("QLabel{font-weight:bold;color:#9933FA;}");
@@ -251,47 +201,19 @@ void BinaryWidget::init64Bit()
 
         auto *checkBox = new QCheckBox(this);
         m_checkBoxList.append(checkBox);
-        binaryBtn->setFixedWidth(FontSize::fontPixel());
         binaryLabel->setFixedWidth(binaryBtn->width());
-
-        binaryNumLabel->setFont(FontSize::fontSize());
-        binaryLabel->setFont(FontSize::fontSize());
-        binaryBtn->setFont(FontSize::fontSize());
-
-        QGridLayout *binaryLayout = nullptr;
-        switch (i / BitGroupLength) {
-        case 4:
-            binaryLayout = binaryLayoutVec[0];
-            break;
-        case 5:
-            binaryLayout = binaryLayoutVec[1];
-            break;
-        case 6:
-            binaryLayout = binaryLayoutVec[2];
-            break;
-        case 7:
-            binaryLayout = binaryLayoutVec[3];
-            break;
-        default:
-            break;
-        }
-
-        binaryLayout->addWidget(binaryNumLabel, 0, i, Qt::AlignCenter);
-        binaryLayout->addWidget(binaryLabel, 1, i, Qt::AlignCenter);
-        binaryLayout->addWidget(binaryBtn, 2, i, Qt::AlignCenter);
-        binaryLayout->addWidget(checkBox, 3, i, Qt::AlignCenter);
-        binaryLayout->setSpacing(binaryBtn->width() / 5);
+        bitLayout->addWidget(binaryNumLabel, 0, column, Qt::AlignCenter);
+        bitLayout->addWidget(binaryLabel, 1, column, Qt::AlignCenter);
+        bitLayout->addWidget(binaryBtn, 2, column, Qt::AlignCenter);
+        bitLayout->addWidget(checkBox, 3, column, Qt::AlignCenter);
     }
-    int i = 0;
-    for (i = 0; i < binaryLayoutVec.length() - 1; i++) {
-        binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
-        groupBoxLayoutDown->addLayout(binaryLayoutVec[i]);
-        groupBoxLayoutDown->addWidget(line[i]);
+    for (int group = 1; group < Bit32 / BitGroupLength; group++) {
+        const int lineColumn = group * BitGroupLength + (group - 1);
+        bitLayout->addWidget(createLine(), 0, lineColumn, 4, 1);
     }
-    binaryLayoutVec[i]->setSpacing(m_binaryBtnGroup->button(i)->width() / 2);
-    groupBoxLayoutDown->addLayout(binaryLayoutVec[i]);
+    bitLayout->setRowStretch(4, 1);
 
-    m_mouseMainLayout->insertLayout(0, groupBoxLayoutDown);
+    m_mouseMainLayout->insertLayout(0, bitLayout);
 
     m_mouseGroupBox->addBtnList(m_binaryBtnGroup);
     m_mouseGroupBox->addCheckBoxList(m_checkBoxList);
@@ -317,5 +239,4 @@ void BinaryWidget::show64Bit()
         m_binaryBtnGroup->button(i)->setVisible(true);
         m_checkBoxList.at(i)->setVisible(true);
     }
-    onFontSizeChanged();
 }

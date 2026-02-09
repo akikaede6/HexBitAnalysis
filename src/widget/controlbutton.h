@@ -11,10 +11,8 @@ public:
     explicit ControlButton(QWidget *parent = nullptr);
 
 signals:
-    void rightAddBtnClicked();
-    void rightDeleteBtnClicked();
-    void belowAddBtnClicked();
-    void belowDeleteBtnClicked();
+    void addBtnClicked();
+    void deleteBtnClicked();
 
 private:
     static void setBtnIcon(const QString &path, QPushButton *button);
